@@ -1,927 +1,1113 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>FlashEng — Học Tiếng Anh Qua Flashcard</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Lingo – Từ vựng Thời trang Chuyên ngành</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  /* ===== RESET & BASE ===== */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --noir: #0f0d0d;
+  --ivory: #faf7f2;
+  --champagne: #e8d9be;
+  --dusty-rose: #c9928a;
+  --mauve: #8b5a6a;
+  --gold: #c8a96e;
+  --slate: #4a4550;
+  --mist: #f0eae4;
+  --card-bg: #ffffff;
+  --success: #5a8a6e;
+  --warn: #c9928a;
+  --border: #e0d5cb;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--noir);line-height:1.6;overflow-x:hidden}
 
-  :root {
-    --primary:   #4F6EF7;
-    --primary-dark: #3A56D4;
-    --accent:    #FF6B6B;
-    --accent2:   #FFD93D;
-    --accent3:   #6BCB77;
-    --bg:        #F0F4FF;
-    --bg2:       #FFFFFF;
-    --text:      #1A1A2E;
-    --text2:     #5A5A7A;
-    --card-r:    16px;
-    --shadow:    0 4px 20px rgba(79,110,247,0.12);
-    --shadow-lg: 0 8px 32px rgba(79,110,247,0.18);
-    --header-h:  64px;
-  }
+/* ===== SCREEN SYSTEM ===== */
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
 
-  html { scroll-behavior: smooth; }
+/* ===== NAVBAR ===== */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:.75rem;cursor:pointer}
+.nav-logo{width:36px;height:36px;background:linear-gradient(135deg,var(--mauve),var(--dusty-rose));border-radius:10px;display:grid;place-items:center;font-family:'Playfair Display',serif;color:#fff;font-size:1.1rem;font-weight:700}
+.nav-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;background:linear-gradient(135deg,var(--mauve),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;align-items:center;gap:1.5rem}
+.nav-link{font-size:.9rem;font-weight:500;color:var(--slate);text-decoration:none;cursor:pointer;padding:.4rem .8rem;border-radius:8px;transition:.2s}
+.nav-link:hover,.nav-link.active{color:var(--mauve);background:rgba(139,90,106,.08)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-search{display:flex;align-items:center;gap:.5rem;background:var(--mist);border:1px solid var(--border);border-radius:20px;padding:.4rem 1rem;font-size:.85rem;color:var(--slate);cursor:pointer;min-width:160px}
+.btn-add{background:linear-gradient(135deg,var(--mauve),var(--dusty-rose));color:#fff;border:none;border-radius:20px;padding:.45rem 1.1rem;font-size:.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:.2s}
+.btn-add:hover{opacity:.9;transform:translateY(-1px)}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--mauve),var(--dusty-rose));display:grid;place-items:center;color:#fff;font-weight:700;font-size:.9rem;cursor:pointer}
 
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
+/* ===== AUTH SCREEN ===== */
+#screen-auth{background:linear-gradient(135deg,#8b5a6a 0%,#c9928a 50%,#e8c5b0 100%);display:none;align-items:center;justify-content:center;min-height:100vh;position:relative;overflow:hidden}
+#screen-auth.active{display:flex}
+.auth-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.12) 1px,transparent 1px);background-size:32px 32px}
+.auth-card{background:#fff;border-radius:24px;padding:2.5rem 2rem;width:100%;max-width:420px;position:relative;z-index:2;box-shadow:0 40px 80px rgba(0,0,0,.2)}
+.auth-logo{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-bottom:2rem}
+.auth-logo-icon{width:52px;height:52px;background:linear-gradient(135deg,var(--mauve),var(--dusty-rose));border-radius:14px;display:grid;place-items:center;font-family:'Playfair Display',serif;color:#fff;font-size:1.5rem;font-weight:700}
+.auth-logo-name{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;background:linear-gradient(135deg,var(--mauve),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.auth-tagline{font-size:.85rem;color:#888;text-align:center}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--mist);border-radius:12px;padding:4px;margin-bottom:1.5rem}
+.auth-tab{padding:.6rem;text-align:center;border-radius:9px;font-size:.9rem;font-weight:600;cursor:pointer;transition:.2s;color:var(--slate)}
+.auth-tab.active{background:#fff;color:var(--mauve);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.form-group{margin-bottom:1.2rem}
+.form-label{display:block;font-size:.82rem;font-weight:600;color:var(--slate);margin-bottom:.4rem;letter-spacing:.04em;text-transform:uppercase}
+.form-input{width:100%;padding:.75rem 1rem;border:1.5px solid var(--border);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--noir);background:var(--ivory);transition:.2s;outline:none}
+.form-input:focus{border-color:var(--mauve);background:#fff;box-shadow:0 0 0 3px rgba(139,90,106,.1)}
+.form-input-wrap{position:relative}
+.form-input-icon{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);color:#bbb;font-size:.9rem}
+.form-input.with-icon{padding-left:2.4rem}
+.form-input-action{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);color:#bbb;font-size:.85rem;cursor:pointer}
+.form-check{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--slate);margin-bottom:1.2rem;cursor:pointer}
+.form-check input{accent-color:var(--mauve);width:15px;height:15px}
+.btn-primary{width:100%;padding:.85rem;background:linear-gradient(135deg,var(--mauve),var(--dusty-rose));color:#fff;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(139,90,106,.35)}
+.auth-divider{text-align:center;color:#bbb;font-size:.85rem;margin:1rem 0;position:relative}
+.auth-divider::before,.auth-divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border)}
+.auth-divider::before{left:0}
+.auth-divider::after{right:0}
+.btn-ghost{width:100%;padding:.8rem;background:transparent;color:var(--mauve);border:1.5px solid var(--border);border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.btn-ghost:hover{background:var(--mist);border-color:var(--mauve)}
 
-  /* ===== HEADER ===== */
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: var(--header-h);
-    background: #fff;
-    box-shadow: 0 2px 12px rgba(79,110,247,0.10);
-    display: flex;
-    align-items: center;
-    padding: 0 32px;
-    gap: 32px;
-  }
+/* ===== HOME SCREEN ===== */
+.hero{background:linear-gradient(135deg,#8b5a6a 0%,#c9928a 55%,#e8c5b0 100%);padding:100px 2rem 3rem;position:relative;overflow:hidden}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.12) 1px,transparent 1px);background-size:32px 32px}
+.hero-content{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:.35rem .9rem;font-size:.8rem;font-weight:600;color:#fff;margin-bottom:1.2rem;letter-spacing:.05em}
+.hero-title{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:#fff;line-height:1.15;margin-bottom:.8rem}
+.hero-title em{color:var(--champagne);font-style:normal}
+.hero-sub{color:rgba(255,255,255,.85);font-size:1rem;margin-bottom:1.5rem;max-width:420px}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-hero-primary{background:#fff;color:var(--mauve);border:none;border-radius:20px;padding:.7rem 1.6rem;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:.5rem}
+.btn-hero-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.btn-hero-secondary{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.4);border-radius:20px;padding:.7rem 1.6rem;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:.5rem}
+.btn-hero-secondary:hover{background:rgba(255,255,255,.25)}
+.hero-stats{display:flex;gap:1.5rem}
+.stat-box{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:1.2rem 1.5rem;text-align:center;min-width:100px;backdrop-filter:blur(8px)}
+.stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:#fff;line-height:1}
+.stat-label{font-size:.75rem;color:rgba(255,255,255,.8);margin-top:.3rem;font-weight:500}
 
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    flex-shrink: 0;
-  }
-  .logo-icon {
-    width: 38px; height: 38px;
-    background: var(--primary);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-  }
-  .logo-text {
-    font-family: 'Baloo 2', cursive;
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--primary);
-    line-height: 1;
-  }
-  .logo-text span { color: var(--accent); }
+/* ===== FILTER TABS ===== */
+.section-main{max-width:1100px;margin:0 auto;padding:2.5rem 2rem}
+.filter-bar{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;padding-bottom:1.2rem;border-bottom:1.5px solid var(--border)}
+.filter-chip{display:flex;align-items:center;gap:.4rem;padding:.45rem 1rem;border-radius:20px;font-size:.85rem;font-weight:500;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--slate);transition:.2s}
+.filter-chip:hover{border-color:var(--mauve);color:var(--mauve)}
+.filter-chip.active{background:var(--mauve);color:#fff;border-color:var(--mauve)}
 
-  nav {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex: 1;
-  }
-  nav a {
-    text-decoration: none;
-    color: var(--text2);
-    font-weight: 700;
-    font-size: 14px;
-    padding: 8px 14px;
-    border-radius: 8px;
-    transition: all .2s;
-    white-space: nowrap;
-  }
-  nav a:hover, nav a.active {
-    background: #EEF1FF;
-    color: var(--primary);
-  }
+/* ===== SECTION HEADER ===== */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
+.section-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--noir);border-left:4px solid var(--mauve);padding-left:.9rem}
+.section-link{font-size:.85rem;font-weight:600;color:var(--mauve);cursor:pointer;display:flex;align-items:center;gap:.3rem}
+.section-link:hover{opacity:.8}
 
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-shrink: 0;
-  }
+/* ===== TOPIC GRID ===== */
+.topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem}
+.topic-card{background:#fff;border-radius:16px;overflow:hidden;border:1.5px solid var(--border);cursor:pointer;transition:.25s;position:relative}
+.topic-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(139,90,106,.15);border-color:var(--mauve)}
+.topic-badge{position:absolute;top:.8rem;left:.8rem;background:var(--mauve);color:#fff;font-size:.68rem;font-weight:700;padding:.25rem .6rem;border-radius:8px;letter-spacing:.08em}
+.topic-owner{position:absolute;top:.8rem;right:.8rem;font-size:.75rem;color:var(--slate);background:var(--mist);border-radius:8px;padding:.2rem .5rem;display:flex;align-items:center;gap:.3rem}
+.topic-img{height:130px;background:linear-gradient(135deg,#e8d9f0,#dce8f5);display:grid;place-items:center;font-size:3rem}
+.topic-body{padding:1rem}
+.topic-name{font-weight:700;font-size:.95rem;margin-bottom:.5rem;line-height:1.3;color:var(--noir)}
+.topic-progress-row{display:flex;justify-content:space-between;font-size:.78rem;color:var(--slate);margin-bottom:.4rem}
+.topic-progress-bar{height:5px;background:var(--mist);border-radius:3px;overflow:hidden}
+.topic-progress-fill{height:100%;background:linear-gradient(90deg,var(--mauve),var(--dusty-rose));border-radius:3px;transition:.6s}
+.btn-study{width:100%;margin-top:.8rem;padding:.55rem;background:var(--mist);color:var(--mauve);border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.btn-study:hover{background:var(--mauve);color:#fff}
 
-  .search-box {
-    display: flex;
-    align-items: center;
-    background: var(--bg);
-    border: 2px solid transparent;
-    border-radius: 24px;
-    padding: 0 16px;
-    gap: 8px;
-    transition: all .2s;
-    width: 200px;
-  }
-  .search-box:focus-within {
-    border-color: var(--primary);
-    background: #fff;
-    width: 240px;
-  }
-  .search-box input {
-    border: none;
-    background: transparent;
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px;
-    color: var(--text);
-    outline: none;
-    width: 100%;
-    padding: 8px 0;
-  }
-  .search-box input::placeholder { color: #aaa; }
-  .search-box svg { flex-shrink: 0; color: #aaa; }
+/* ===== TOPICS LIST SCREEN ===== */
+.page-header{padding:80px 2rem 2rem;background:linear-gradient(180deg,var(--mist) 0%,var(--ivory) 100%);border-bottom:1.5px solid var(--border)}
+.page-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;color:var(--noir);max-width:1100px;margin:0 auto}
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    padding: 9px 18px;
-    border-radius: 24px;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    transition: all .2s;
-    white-space: nowrap;
-  }
-  .btn-primary {
-    background: var(--primary);
-    color: #fff;
-    box-shadow: 0 4px 12px rgba(79,110,247,0.3);
-  }
-  .btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(79,110,247,0.4);
-  }
-  .btn-outline {
-    background: transparent;
-    color: var(--primary);
-    border: 2px solid var(--primary);
-  }
-  .btn-outline:hover {
-    background: #EEF1FF;
-  }
+/* ===== FLASHCARD SCREEN ===== */
+#screen-study{padding-top:64px}
+.study-layout{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 64px)}
+.study-sidebar{background:#fff;border-right:1.5px solid var(--border);padding:1.5rem;overflow-y:auto}
+.sidebar-topic-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--noir);margin-bottom:1rem;line-height:1.3}
+.sidebar-progress{background:var(--mist);border-radius:12px;padding:1rem;margin-bottom:1.2rem}
+.sidebar-prog-label{font-size:.78rem;color:var(--slate);margin-bottom:.4rem;font-weight:600}
+.sidebar-prog-bar{height:7px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:.3rem}
+.sidebar-prog-fill{height:100%;background:linear-gradient(90deg,var(--mauve),var(--dusty-rose));transition:.4s}
+.sidebar-prog-pct{font-size:.75rem;color:var(--mauve);font-weight:700;text-align:right}
+.sidebar-parts{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.2rem}
+.sidebar-part{padding:.7rem 1rem;border-radius:10px;cursor:pointer;transition:.2s;border:1.5px solid transparent;display:flex;justify-content:space-between;align-items:center;font-size:.9rem;font-weight:500}
+.sidebar-part:hover{background:var(--mist)}
+.sidebar-part.active{background:var(--mist);border-color:var(--mauve);color:var(--mauve)}
+.sidebar-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem}
+.stat-item{background:var(--mist);border-radius:8px;padding:.6rem;text-align:center}
+.stat-num-sm{font-size:1.3rem;font-weight:700}
+.stat-num-sm.green{color:var(--success)}
+.stat-num-sm.red{color:var(--warn)}
+.stat-num-sm.yellow{color:var(--gold)}
+.stat-lbl{font-size:.68rem;color:var(--slate);margin-top:.1rem}
 
-  .avatar {
-    width: 38px; height: 38px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    display: flex; align-items: center; justify-content: center;
-    color: #fff;
-    font-weight: 800;
-    font-size: 15px;
-    cursor: pointer;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 8px rgba(79,110,247,0.3);
-    position: relative;
-  }
-  .avatar-menu {
-    position: absolute;
-    top: 100%;
-    padding-top: 10px;       /* vùng đệm trong suốt để không mất hover */
-    right: 0;
-    display: none;
-    z-index: 200;
-  }
-  .avatar:hover .avatar-menu { display: block; }
-  .avatar-menu-inner {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    padding: 8px;
-    min-width: 160px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .avatar-menu a {
-    display: flex; align-items: center; gap: 8px;
-    padding: 9px 12px;
-    border-radius: 8px;
-    text-decoration: none;
-    color: var(--text);
-    font-size: 14px;
-    font-weight: 600;
-    transition: background .15s;
-  }
-  .avatar-menu a:hover { background: var(--bg); }
-  .avatar-name {
-    font-size: 13px; font-weight: 700; color: var(--text);
-    display: none;
-  }
+/* Card area */
+.study-main{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;gap:1.5rem;background:var(--mist);flex:1}
+.topic-header-bar{background:linear-gradient(135deg,var(--mauve),var(--dusty-rose));border-radius:16px;padding:1rem 1.5rem;width:100%;max-width:680px;display:flex;align-items:center;gap:1rem;color:#fff}
+.topic-header-icon{width:40px;height:40px;background:rgba(255,255,255,.2);border-radius:10px;display:grid;place-items:center;font-size:1.3rem}
+.topic-header-info .topic-h-name{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem}
+.topic-header-info .topic-h-sub{font-size:.8rem;opacity:.8}
+.card-wrapper{width:100%;max-width:680px;perspective:1200px}
+.flashcard{width:100%;height:340px;position:relative;cursor:pointer;transition:transform .7s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flashcard.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;inset:0;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.card-front{background:#fff;border:2px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,.06)}
+.card-back{background:linear-gradient(135deg,#f7f0f8,#faf3ee);border:2px solid var(--champagne);box-shadow:0 8px 32px rgba(139,90,106,.1);transform:rotateY(180deg)}
+.card-topic-tag{position:absolute;top:1rem;left:1rem;background:var(--mauve);color:#fff;font-size:.7rem;font-weight:700;padding:.25rem .6rem;border-radius:8px;letter-spacing:.08em}
+.card-emoji-area{font-size:4rem;margin-bottom:1rem;user-select:none}
+.card-vi{font-size:1.4rem;font-weight:600;color:var(--noir);text-align:center;padding:0 1.5rem;line-height:1.4}
+.card-hint{font-size:.8rem;color:#aaa;margin-top:.8rem;display:flex;align-items:center;gap:.3rem}
+.card-en{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--mauve);text-align:center;padding:0 1.5rem}
+.card-ipa{font-family:'DM Mono',monospace;font-size:.95rem;color:var(--dusty-rose);margin-top:.5rem;background:rgba(139,90,106,.08);padding:.3rem .8rem;border-radius:8px}
+.card-example{font-size:.85rem;color:var(--slate);text-align:center;padding:0 1.5rem;margin-top:.8rem;font-style:italic;line-height:1.5}
+.card-dots{display:flex;gap:.5rem;margin-top:.5rem}
+.card-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:.3s}
+.card-dot.active{background:var(--mauve);width:20px;border-radius:4px}
+.card-actions{display:flex;gap:.75rem;align-items:center;width:100%;max-width:680px}
+.btn-action{flex:1;padding:.75rem 1rem;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:.4rem;transition:.2s}
+.btn-action:hover{transform:translateY(-2px)}
+.btn-flip{background:linear-gradient(135deg,var(--mauve),var(--dusty-rose));color:#fff;box-shadow:0 4px 16px rgba(139,90,106,.3)}
+.btn-not-yet{background:#fff8f8;color:var(--dusty-rose);border:1.5px solid #f5d0cc}
+.btn-not-yet:hover{background:#fce8e5}
+.btn-bookmark{background:#fffbf0;color:var(--gold);border:1.5px solid #f3e5bc;flex:0;padding:.75rem}
+.btn-mastered{background:#f0f9f4;color:var(--success);border:1.5px solid #c3e8d2}
+.btn-more{background:#fff;color:var(--slate);border:1.5px solid var(--border);flex:0;padding:.75rem}
+.nav-cards{display:flex;align-items:center;gap:1rem;width:100%;max-width:680px;justify-content:center}
+.nav-card-btn{padding:.5rem 1.2rem;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-size:.85rem;font-weight:600;color:var(--slate);cursor:pointer;transition:.2s}
+.nav-card-btn:hover{border-color:var(--mauve);color:var(--mauve)}
+.card-counter{font-size:.85rem;color:var(--slate);font-weight:500}
 
-  /* ===== HERO BANNER ===== */
-  .hero {
-    background: linear-gradient(135deg, #4F6EF7 0%, #7B5EA7 50%, #FF6B6B 100%);
-    padding: 48px 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-    overflow: hidden;
-    position: relative;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  }
-  .hero-text { position: relative; z-index: 1; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(255,255,255,0.2);
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 24px;
-    padding: 6px 14px;
-    font-size: 13px; font-weight: 700; color: #fff;
-    margin-bottom: 16px;
-  }
-  .hero h1 {
-    font-family: 'Baloo 2', cursive;
-    font-size: 36px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.2;
-    margin-bottom: 12px;
-    max-width: 540px;
-  }
-  .hero h1 span { color: var(--accent2); }
-  .hero p {
-    color: rgba(255,255,255,0.85);
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 24px;
-    max-width: 480px;
-  }
-  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn-white {
-    background: #fff;
-    color: var(--primary);
-    font-weight: 800;
-  }
-  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-  .btn-ghost {
-    background: rgba(255,255,255,0.15);
-    color: #fff;
-    border: 2px solid rgba(255,255,255,0.4);
-  }
-  .btn-ghost:hover { background: rgba(255,255,255,0.25); }
+/* ===== NOTES SCREEN ===== */
+.notes-layout{max-width:900px;margin:0 auto;padding:5rem 2rem 2rem}
+.notes-empty{text-align:center;padding:4rem;color:var(--slate);font-size:1rem}
+.note-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:1.2rem;margin-bottom:1rem}
+.note-word{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--mauve)}
+.note-vi{font-size:.9rem;color:var(--slate);margin-top:.2rem}
+.note-ipa{font-family:'DM Mono',monospace;font-size:.82rem;color:var(--dusty-rose);background:var(--mist);display:inline-block;padding:.2rem .5rem;border-radius:6px;margin-top:.3rem}
+.note-ex{font-size:.85rem;color:#777;margin-top:.5rem;font-style:italic;border-left:3px solid var(--champagne);padding-left:.6rem}
 
-  .hero-stats {
-    display: flex; gap: 24px;
-    position: relative; z-index: 1;
-    flex-shrink: 0;
-  }
-  .stat-card {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 16px;
-    padding: 20px 28px;
-    text-align: center;
-    color: #fff;
-  }
-  .stat-card .num {
-    font-family: 'Baloo 2', cursive;
-    font-size: 32px; font-weight: 800;
-    line-height: 1;
-  }
-  .stat-card .label {
-    font-size: 13px; font-weight: 600;
-    opacity: .85; margin-top: 4px;
-  }
+/* ===== MODAL (Search) ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(4px);z-index:200;display:none;align-items:flex-start;justify-content:center;padding-top:100px}
+.modal-overlay.open{display:flex}
+.search-modal{background:#fff;border-radius:20px;width:100%;max-width:560px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.2)}
+.search-input-wrap{display:flex;align-items:center;gap:.8rem;padding:1rem 1.2rem;border-bottom:1px solid var(--border)}
+.search-input-field{flex:1;border:none;font-family:'DM Sans',sans-serif;font-size:1rem;outline:none;color:var(--noir)}
+.search-results{max-height:400px;overflow-y:auto}
+.search-result-item{padding:.9rem 1.2rem;display:flex;gap:.8rem;align-items:center;cursor:pointer;transition:.15s;border-bottom:1px solid var(--mist)}
+.search-result-item:hover{background:var(--mist)}
+.sri-en{font-weight:700;color:var(--mauve);font-size:.95rem}
+.sri-vi{font-size:.82rem;color:var(--slate)}
+.sri-topic{font-size:.72rem;background:var(--mist);color:var(--slate);border-radius:6px;padding:.15rem .5rem}
 
-  /* ===== MAIN CONTENT ===== */
-  main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 32px 80px;
-  }
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--noir);color:#fff;border-radius:12px;padding:.7rem 1.2rem;font-size:.88rem;font-weight:500;z-index:300;transform:translateY(20px);opacity:0;transition:.3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
 
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-  }
-  .section-title {
-    font-family: 'Baloo 2', cursive;
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--text);
-    display: flex; align-items: center; gap: 10px;
-  }
-  .section-title::before {
-    content: '';
-    width: 5px; height: 24px;
-    background: var(--primary);
-    border-radius: 3px;
-    display: block;
-  }
-  .see-all {
-    font-size: 14px; font-weight: 700;
-    color: var(--primary);
-    text-decoration: none;
-    display: flex; align-items: center; gap: 4px;
-  }
-  .see-all:hover { text-decoration: underline; }
-
-  /* ===== TOPIC GRID ===== */
-  .topic-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-  }
-
-  .topic-card {
-    background: var(--bg2);
-    border-radius: var(--card-r);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    cursor: pointer;
-    transition: all .25s cubic-bezier(.34,1.56,.64,1);
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    border: 2px solid transparent;
-    position: relative;
-  }
-  .topic-card:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary);
-  }
-
-  .topic-card-img {
-    height: 150px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 56px;
-    position: relative;
-    overflow: hidden;
-  }
-  .topic-card-img .topic-num {
-    position: absolute; top: 10px; left: 10px;
-    background: rgba(0,0,0,0.35);
-    color: #fff;
-    font-size: 11px; font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 6px;
-    letter-spacing: .5px;
-  }
-  .topic-card-img .topic-badge {
-    position: absolute; top: 10px; right: 10px;
-    background: rgba(255,255,255,0.9);
-    color: var(--text2);
-    font-size: 11px; font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 6px;
-    display: flex; align-items: center; gap: 4px;
-  }
-
-  .topic-card-body {
-    padding: 14px 16px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
-  }
-  .topic-card-name {
-    font-weight: 800;
-    font-size: 14px;
-    color: var(--text);
-    letter-spacing: .3px;
-  }
-  .topic-card-meta {
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .topic-card-count {
-    font-size: 12px; font-weight: 600; color: var(--text2);
-    display: flex; align-items: center; gap: 4px;
-  }
-  .progress-bar {
-    height: 4px;
-    background: #EEF1FF;
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    border-radius: 2px;
-    transition: width .5s ease;
-  }
-  .study-btn {
-    margin-top: 4px;
-    width: 100%;
-    background: #EEF1FF;
-    color: var(--primary);
-    border: none;
-    border-radius: 10px;
-    padding: 9px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all .2s;
-  }
-  .study-btn:hover {
-    background: var(--primary);
-    color: #fff;
-  }
-
-  /* Color themes for cards */
-  .theme-blue   { background: linear-gradient(135deg, #E3F0FF, #C5DCFF); }
-  .theme-pink   { background: linear-gradient(135deg, #FFE3F0, #FFC5DC); }
-  .theme-green  { background: linear-gradient(135deg, #E3FFE8, #C5FFD0); }
-  .theme-yellow { background: linear-gradient(135deg, #FFFAE3, #FFF0C5); }
-  .theme-purple { background: linear-gradient(135deg, #F0E3FF, #DCC5FF); }
-  .theme-orange { background: linear-gradient(135deg, #FFE8E3, #FFD0C5); }
-  .theme-teal   { background: linear-gradient(135deg, #E3FFFA, #C5FFF4); }
-  .theme-red    { background: linear-gradient(135deg, #FFE3E3, #FFC5C5); }
-
-  /* ===== FILTER TABS ===== */
-  .filter-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 28px;
-    flex-wrap: wrap;
-  }
-  .filter-tab {
-    padding: 8px 18px;
-    border-radius: 24px;
-    border: 2px solid #E0E5FF;
-    background: #fff;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    color: var(--text2);
-    cursor: pointer;
-    transition: all .2s;
-  }
-  .filter-tab:hover { border-color: var(--primary); color: var(--primary); }
-  .filter-tab.active {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: #fff;
-  }
-
-  /* ===== ADD VOCAB MODAL ===== */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(26,26,46,.5);
-    backdrop-filter: blur(4px);
-    z-index: 500;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
-  .modal-overlay.open { display: flex; }
-  .modal {
-    background: #fff;
-    border-radius: 20px;
-    padding: 32px;
-    width: 100%;
-    max-width: 480px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-    animation: modalIn .3s cubic-bezier(.34,1.56,.64,1);
-  }
-  @keyframes modalIn {
-    from { transform: scale(.9) translateY(20px); opacity: 0; }
-    to   { transform: scale(1) translateY(0);    opacity: 1; }
-  }
-  .modal-title {
-    font-family: 'Baloo 2', cursive;
-    font-size: 20px; font-weight: 800;
-    color: var(--text); margin-bottom: 24px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .modal-close {
-    background: var(--bg); border: none; cursor: pointer;
-    width: 32px; height: 32px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; color: var(--text2);
-    transition: background .2s;
-  }
-  .modal-close:hover { background: #FFE0E0; color: var(--accent); }
-  .form-group { margin-bottom: 16px; }
-  .form-label {
-    display: block; font-size: 13px; font-weight: 700;
-    color: var(--text2); margin-bottom: 6px;
-  }
-  .form-input {
-    width: 100%;
-    padding: 11px 14px;
-    border: 2px solid #E0E5FF;
-    border-radius: 10px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px; font-weight: 600;
-    color: var(--text);
-    outline: none;
-    transition: border-color .2s;
-  }
-  .form-input:focus { border-color: var(--primary); }
-  .form-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A5A7A' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 14px center;
-    padding-right: 36px;
-  }
-
-  /* ===== TOAST ===== */
-  .toast {
-    position: fixed; bottom: 24px; right: 24px;
-    background: var(--text);
-    color: #fff; padding: 14px 20px;
-    border-radius: 12px;
-    font-weight: 700; font-size: 14px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    display: flex; align-items: center; gap: 10px;
-    transform: translateY(80px); opacity: 0;
-    transition: all .3s cubic-bezier(.34,1.56,.64,1);
-    z-index: 1000;
-  }
-  .toast.show { transform: translateY(0); opacity: 1; }
-  .toast.success { background: var(--accent3); }
-
-  /* ===== FOOTER ===== */
-  footer {
-    background: var(--text);
-    color: rgba(255,255,255,.6);
-    text-align: center;
-    padding: 24px 32px;
-    font-size: 13px; font-weight: 600;
-  }
-  footer span { color: var(--accent2); }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 768px) {
-    header { padding: 0 16px; gap: 12px; }
-    nav a:not(.active) { display: none; }
-    .hero { flex-direction: column; padding: 32px 16px; }
-    .hero-stats { gap: 12px; }
-    .stat-card { padding: 14px 20px; }
-    main { padding: 24px 16px 60px; }
-    .topic-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
-    .hero h1 { font-size: 26px; }
-  }
+/* ===== UTIL ===== */
+.mt1{margin-top:.5rem}
+.mb2{margin-bottom:1rem}
+.text-center{text-align:center}
+@media(max-width:768px){
+  .hero-content{grid-template-columns:1fr;gap:1.5rem}
+  .hero-title{font-size:2rem}
+  .hero-stats{gap:.8rem}
+  .stat-box{min-width:80px;padding:.8rem 1rem}
+  .study-layout{grid-template-columns:1fr}
+  .study-sidebar{display:none}
+  .nav-links{display:none}
+  .topics-grid{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+}
 </style>
 </head>
 <body>
-<script>
-// Kiểm tra đăng nhập - nếu chưa có session, chuyển về trang login
-if (!localStorage.getItem('fe_current_user')) {
-  window.location.href = 'login.html';
-}
-</script>
 
-<!-- ===== HEADER ===== -->
-<header>
-  <a href="index.html" class="logo">
-    <div class="logo-icon">🧠</div>
-    <div class="logo-text">Flash<span>Eng</span></div>
-  </a>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-  <nav>
-    <a href="index.html" class="active">🏠 Trang chủ</a>
-    <a href="index.html">📚 Chủ đề</a>
-    <a href="flashcard.html">🃏 Học ngay</a>
-    <a href="notes.html">📝 Ghi chú</a>
-  </nav>
-
-  <div class="header-right">
-    <!-- Search -->
-    <div class="search-box">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-      </svg>
-      <input type="text" placeholder="Tra cứu từ..." id="searchInput" onkeydown="if(event.key==='Enter') doSearch()"/>
+<!-- SEARCH MODAL -->
+<div class="modal-overlay" id="searchModal" onclick="closeSearch(event)">
+  <div class="search-modal">
+    <div class="search-input-wrap">
+      <span style="color:#bbb;font-size:1.1rem">🔍</span>
+      <input class="search-input-field" id="searchField" placeholder="Tìm từ vựng..." oninput="doSearch(this.value)">
+      <span style="cursor:pointer;color:#bbb" onclick="closeSearch()">✕</span>
     </div>
-
-    <!-- Add vocab button -->
-    <button class="btn btn-primary" onclick="openModal()">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-      Thêm từ mới
-    </button>
-
-    <!-- Avatar -->
-    <div class="avatar" id="headerAvatar">
-      U
-      <div class="avatar-menu">
-        <div class="avatar-menu-inner">
-          <a href="profile.html">👤 Trang cá nhân</a>
-          <a href="profile.html">📊 Tiến độ học</a>
-          <a href="profile.html">⚙️ Cài đặt</a>
-          <a href="#" style="color:#FF6B6B" onclick="doLogout(event)">🚪 Đăng xuất</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="hero-text">
-    <div class="hero-badge">✨ Phương pháp Spaced Repetition</div>
-    <h1>Học <span>từ vựng tiếng Anh</span> hiệu quả mỗi ngày</h1>
-    <p>Hơn 1.000+ từ vựng theo chủ đề, flashcard tương tác, phát âm chuẩn — tất cả miễn phí!</p>
-    <div class="hero-actions">
-      <a href="flashcard.html" class="btn btn-white">🚀 Bắt đầu học ngay</a>
-      <a href="index.html" class="btn btn-ghost">📖 Xem chủ đề</a>
-    </div>
-  </div>
-  <div class="hero-stats">
-    <div class="stat-card">
-      <div class="num">30</div>
-      <div class="label">Chủ đề</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">1.2K</div>
-      <div class="label">Từ vựng</div>
-    </div>
-    <div class="stat-card">
-      <div class="num">100%</div>
-      <div class="label">Miễn phí</div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== MAIN ===== -->
-<main>
-
-  <!-- Filter tabs -->
-  <div class="filter-tabs">
-    <button class="filter-tab active" onclick="filterTopics('all', this)">🌟 Tất cả</button>
-    <button class="filter-tab" onclick="filterTopics('daily', this)">🌅 Đời sống</button>
-    <button class="filter-tab" onclick="filterTopics('work', this)">💼 Công việc</button>
-    <button class="filter-tab" onclick="filterTopics('travel', this)">✈️ Du lịch</button>
-    <button class="filter-tab" onclick="filterTopics('education', this)">🎓 Học thuật</button>
-    <button class="filter-tab" onclick="filterTopics('culture', this)">🌏 Văn hóa</button>
-  </div>
-
-  <!-- Section: Chủ đề nổi bật -->
-  <div class="section-header">
-    <div class="section-title">Thư viện chủ đề</div>
-    <a href="index.html" class="see-all">Xem tất cả →</a>
-  </div>
-
-  <div class="topic-grid" id="topicGrid">
-    <!-- Generated by JS -->
-  </div>
-
-</main>
-
-<!-- ===== FOOTER ===== -->
-<footer>
-  © 2024 <span>FlashEng</span> — Học tiếng Anh mỗi ngày, tiến bộ mỗi giờ 🚀
-</footer>
-
-<!-- ===== ADD VOCAB MODAL ===== -->
-<div class="modal-overlay" id="addModal" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="modal-title">
-      ➕ Thêm từ vựng mới
-      <button class="modal-close" onclick="closeModal()">✕</button>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Từ tiếng Anh *</label>
-      <input class="form-input" id="newWord" placeholder="Ví dụ: Community" type="text"/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Nghĩa tiếng Việt *</label>
-      <input class="form-input" id="newMeaning" placeholder="Ví dụ: Cộng đồng" type="text"/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Phiên âm</label>
-      <input class="form-input" id="newPhonetic" placeholder="Ví dụ: /kəˈmjuːnɪti/" type="text"/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Câu ví dụ</label>
-      <input class="form-input" id="newExample" placeholder="Ví dụ: The community helped each other." type="text"/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Chủ đề</label>
-      <select class="form-input form-select" id="newTopic">
-        <option value="0">-- Chọn chủ đề --</option>
-      </select>
-    </div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px" onclick="saveWord()">
-      💾 Lưu từ vựng
-    </button>
+    <div class="search-results" id="searchResults"></div>
   </div>
 </div>
 
-<!-- ===== TOAST ===== -->
-<div class="toast" id="toast">✅ Đã lưu thành công!</div>
+<!-- ========== AUTH SCREEN ========== -->
+<div class="screen active" id="screen-auth">
+  <div class="auth-dots"></div>
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="auth-logo-icon">F</div>
+      <div class="auth-logo-name">Fashion Lingo</div>
+      <div class="auth-tagline">✂️ Học từ vựng thời trang chuyên ngành mỗi ngày</div>
+    </div>
+    <div class="auth-tabs" id="authTabs">
+      <div class="auth-tab active" onclick="switchTab('login')">Đăng nhập</div>
+      <div class="auth-tab" onclick="switchTab('register')">Đăng ký</div>
+    </div>
+    <!-- Login form -->
+    <div id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <div class="form-input-wrap">
+          <span class="form-input-icon">✉</span>
+          <input class="form-input with-icon" type="email" id="loginEmail" placeholder="ban@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mật khẩu</label>
+        <div class="form-input-wrap">
+          <span class="form-input-icon">🔒</span>
+          <input class="form-input with-icon" type="password" id="loginPw" placeholder="••••••••">
+          <span class="form-input-action" onclick="togglePw('loginPw')">👁</span>
+        </div>
+      </div>
+      <label class="form-check"><input type="checkbox" checked> Ghi nhớ đăng nhập</label>
+      <button class="btn-primary" onclick="doLogin()">🔒 Đăng nhập</button>
+      <div class="auth-divider">hoặc</div>
+      <button class="btn-ghost" onclick="guestLogin()">👋 Dùng thử không cần đăng ký</button>
+    </div>
+    <!-- Register form -->
+    <div id="registerForm" style="display:none">
+      <div class="form-group">
+        <label class="form-label">Họ và tên</label>
+        <div class="form-input-wrap">
+          <span class="form-input-icon">👤</span>
+          <input class="form-input with-icon" placeholder="Nguyễn Văn A">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <div class="form-input-wrap">
+          <span class="form-input-icon">✉</span>
+          <input class="form-input with-icon" type="email" placeholder="ban@email.com">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mật khẩu</label>
+        <div class="form-input-wrap">
+          <span class="form-input-icon">🔒</span>
+          <input class="form-input with-icon" type="password" id="regPw" placeholder="Tối thiểu 8 ký tự">
+          <span class="form-input-action" onclick="togglePw('regPw')">👁</span>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="doRegister()">✨ Tạo tài khoản</button>
+      <div class="auth-divider">hoặc</div>
+      <button class="btn-ghost" onclick="guestLogin()">👋 Dùng thử không cần đăng ký</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MAIN APP SCREENS ========== -->
+<!-- NAVBAR -->
+<nav class="navbar" id="mainNav" style="display:none">
+  <div class="nav-brand" onclick="showScreen('home')">
+    <div class="nav-logo">F</div>
+    <span class="nav-name">Fashion Lingo</span>
+  </div>
+  <div class="nav-links">
+    <span class="nav-link active" onclick="showScreen('home');setActiveLink(this)">🏠 Trang chủ</span>
+    <span class="nav-link" onclick="showScreen('topics');setActiveLink(this)">📚 Chủ đề</span>
+    <span class="nav-link" onclick="showScreen('study');setActiveLink(this)">📖 Học ngay</span>
+    <span class="nav-link" onclick="showScreen('notes');setActiveLink(this)">📝 Ghi chú</span>
+  </div>
+  <div class="nav-right">
+    <div class="nav-search" onclick="openSearch()">🔍 Tra cứu từ...</div>
+    <button class="btn-add" onclick="showToast('Tính năng sắp ra mắt! ✨')">+ Thêm từ mới</button>
+    <div class="avatar" id="navAvatar" onclick="showToast('Tài khoản: ' + currentUser)">U</div>
+  </div>
+</nav>
+
+<!-- HOME SCREEN -->
+<div class="screen" id="screen-home">
+  <div class="hero">
+    <div class="hero-dots"></div>
+    <div class="hero-content">
+      <div>
+        <div class="hero-badge">✂️ Phương pháp Spaced Repetition</div>
+        <h1 class="hero-title">Học <em>từ vựng thời trang</em> hiệu quả mỗi ngày</h1>
+        <p class="hero-sub">Hơn 300+ từ vựng chuyên ngành may mặc & thiết kế, flashcard tương tác, phát âm chuẩn — tất cả miễn phí!</p>
+        <div class="hero-actions">
+          <button class="btn-hero-primary" onclick="showScreen('study')">🚀 Bắt đầu học ngay</button>
+          <button class="btn-hero-secondary" onclick="showScreen('topics')">📚 Xem chủ đề</button>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-box"><div class="stat-num">23</div><div class="stat-label">Chủ đề</div></div>
+        <div class="stat-box"><div class="stat-num">300+</div><div class="stat-label">Từ vựng</div></div>
+        <div class="stat-box"><div class="stat-num">100%</div><div class="stat-label">Miễn phí</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="section-main">
+    <div class="filter-bar" id="homeFilterBar">
+      <div class="filter-chip active" onclick="filterTopics('all',this)">🌟 Tất cả</div>
+      <div class="filter-chip" onclick="filterTopics('Vải vóc',this)">🧵 Vải vóc</div>
+      <div class="filter-chip" onclick="filterTopics('Quần áo',this)">👗 Quần áo</div>
+      <div class="filter-chip" onclick="filterTopics('Máy móc',this)">⚙️ Máy móc</div>
+      <div class="filter-chip" onclick="filterTopics('Kỹ năng',this)">💬 Kỹ năng</div>
+      <div class="filter-chip" onclick="filterTopics('Thương mại',this)">💼 Thương mại</div>
+      <div class="filter-chip" onclick="filterTopics('Thiết kế',this)">✏️ Thiết kế</div>
+    </div>
+    <div class="section-header">
+      <h2 class="section-title">Thư viện chủ đề</h2>
+      <span class="section-link" onclick="showScreen('topics')">Xem tất cả →</span>
+    </div>
+    <div class="topics-grid" id="homeTopicsGrid"></div>
+  </div>
+</div>
+
+<!-- TOPICS SCREEN -->
+<div class="screen" id="screen-topics">
+  <div class="page-header">
+    <div class="page-title" style="font-size:1.5rem;margin-bottom:.5rem">📚 Tất cả chủ đề</div>
+    <div style="max-width:1100px;margin:0 auto;color:var(--slate);font-size:.9rem">Chọn chủ đề để bắt đầu học flashcard</div>
+  </div>
+  <div class="section-main">
+    <div class="topics-grid" id="allTopicsGrid"></div>
+  </div>
+</div>
+
+<!-- STUDY SCREEN -->
+<div class="screen" id="screen-study">
+  <div class="study-layout">
+    <div class="study-sidebar">
+      <div class="sidebar-topic-title" id="sidebarTopicTitle">Chọn chủ đề</div>
+      <div class="sidebar-progress">
+        <div class="sidebar-prog-label">Hoàn thành: <span id="sidebarProgText">0/0</span> thẻ</div>
+        <div class="sidebar-prog-bar"><div class="sidebar-prog-fill" id="sidebarProgFill" style="width:0%"></div></div>
+        <div class="sidebar-prog-pct" id="sidebarProgPct">0%</div>
+      </div>
+      <div class="sidebar-parts" id="sidebarParts"></div>
+      <div class="sidebar-stats">
+        <div class="stat-item"><div class="stat-num-sm green" id="statsKnown">0</div><div class="stat-lbl">Đã thuộc</div></div>
+        <div class="stat-item"><div class="stat-num-sm red" id="statsUnknown">0</div><div class="stat-lbl">Chưa thuộc</div></div>
+        <div class="stat-item"><div class="stat-num-sm yellow" id="statsBookmark">0</div><div class="stat-lbl">Bookmark</div></div>
+      </div>
+    </div>
+    <div class="study-main">
+      <div class="topic-header-bar" id="studyHeaderBar">
+        <div class="topic-header-icon" id="studyHeaderIcon">📖</div>
+        <div class="topic-header-info">
+          <div class="topic-h-name" id="studyHeaderName">Chọn chủ đề để học</div>
+          <div class="topic-h-sub" id="studyHeaderSub">Fashion Lingo</div>
+        </div>
+      </div>
+      <div class="card-wrapper">
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+          <div class="card-face card-front">
+            <div class="card-topic-tag" id="cardTopicTag">TOPIC</div>
+            <div class="card-emoji-area" id="cardEmoji">👗</div>
+            <div class="card-vi" id="cardVi">Chọn một chủ đề để bắt đầu học!</div>
+            <div class="card-hint">⟳ Nhấn vào thẻ để lật xem từ tiếng Anh</div>
+          </div>
+          <div class="card-face card-back">
+            <div class="card-topic-tag" id="cardTopicTagBack">TOPIC</div>
+            <div class="card-en" id="cardEn">Fashion Lingo</div>
+            <div class="card-ipa" id="cardIpa">/ˈfæʃən ˈlɪŋɡwə/</div>
+            <div class="card-example" id="cardExample">Chọn một chủ đề để bắt đầu học!</div>
+          </div>
+        </div>
+        <div class="card-dots" id="cardDots" style="justify-content:center;margin-top:1rem"></div>
+      </div>
+      <div class="card-actions">
+        <button class="btn-action btn-not-yet" onclick="markCard('unknown')">😕 Chưa thuộc</button>
+        <button class="btn-action btn-bookmark" onclick="markCard('bookmark')" title="Bookmark">★</button>
+        <button class="btn-action btn-flip" onclick="flipCard()">⟳ Lật thẻ</button>
+        <button class="btn-action btn-mastered" onclick="markCard('known')">😊 Đã thuộc</button>
+        <button class="btn-action btn-more" onclick="showToast('Tính năng sắp có!')" title="Thêm">⋯</button>
+      </div>
+      <div class="nav-cards">
+        <button class="nav-card-btn" onclick="prevCard()">← Trước</button>
+        <span class="card-counter" id="cardCounter">0 / 0</span>
+        <button class="nav-card-btn" onclick="nextCard()">Tiếp →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTES SCREEN -->
+<div class="screen" id="screen-notes">
+  <div class="notes-layout">
+    <div class="section-header" style="margin-bottom:1.5rem">
+      <h2 class="section-title">📝 Bookmark của tôi</h2>
+      <span class="section-link" onclick="clearBookmarks()">Xóa tất cả</span>
+    </div>
+    <div id="notesContainer"></div>
+  </div>
+</div>
 
 <script>
-// ============================================================
-// DATA: Chủ đề từ vựng mẫu (lưu trong localStorage)
-// ============================================================
-const DEFAULT_TOPICS = [
-  { id:1, name:'Fabric', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:2, name:'Tools and Parts of Clothing', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:3, name:'Steps of Making a Garment Item', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:4, name:'Part of Human Body', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:5, name:'Shopping and Clothes', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:6, name:'Parts of Garment', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:7, name:'Colors', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:8, name:'Email', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:9, name:'Parts of the Sewing Machine', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:10, name:'Sewing Machine Instructions', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:11, name:'Relationship Building', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:12, name:'Small Talk Techniques', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:13, name:'Garment Measurements & Sizing', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:14, name:'Commercial, Accounting & Customer Service', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:15, name:'Cognition & Decision Making', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:16, name:'Interpersonal & Communication Skills', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:17, name:'Body Language & Expressions', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:18, name:'Attitudes & Emotional States', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:19, name:'Thread & Sewing Defects, Machine Components & Operation', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:20, name:'Fashion Trends', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:21, name:'Sketch', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:22, name:'Process', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 },
-  { id:23, name:'Accessory', emoji:'📘', theme:'blue', cat:'custom', words:[], count:0 }
+// ===== DATA =====
+const TOPICS = [
+  {
+    id:1, name:"SHOPPING AND CLOTHES", vi:"Mua sắm & Quần áo", emoji:"👗", cat:"Quần áo",
+    words:[
+      {en:"Coat",ipa:"/kəut/",vi:"Áo choàng",ex:"She wears a long coat to stay warm."},
+      {en:"Suit",ipa:"/sju:t/",vi:"Bộ com lê",ex:"He wears a suit to the wedding."},
+      {en:"Swimsuit",ipa:"/'swimsju:t/",vi:"Bộ đồ bơi",ex:"Don't forget your swimsuit for the beach trip."},
+      {en:"Jacket",ipa:"/'dʒækit/",vi:"Áo khoác",ex:"Put on a jacket, it's cold outside."},
+      {en:"T-shirt",ipa:"/ti ʃ3:t/",vi:"Áo phông",ex:"I just bought a basic cotton T-shirt."},
+      {en:"Shirt",ipa:"/ʃ3.t/",vi:"Áo sơ mi",ex:"He fastened the front buttons of his white shirt."},
+      {en:"Sweater",ipa:"/ˈswetə(r)/",vi:"Áo len dài tay",ex:"This winter sweater is knitted from warm wool."},
+      {en:"Jumper",ipa:"/'dʒʌmpe(r)/",vi:"Áo len chui đầu",ex:"A jumper warms your upper body."},
+      {en:"Blouse",ipa:"/blaʊz/",vi:"Áo cánh của nữ",ex:"The office lady styled a silk blouse."},
+      {en:"Trousers",ipa:"/ˈtraʊzəz/",vi:"Quần âu",ex:"Formal trousers cover each leg from waist to ankles."},
+      {en:"Jeans",ipa:"/dʒi.nz/",vi:"Quần bò",ex:"Tuff denim jeans are very strong pants."},
+      {en:"Shorts",ipa:"/ʃɔ.ts/",vi:"Quần sooc",ex:"These summer shorts only cover your legs to the knees."},
+      {en:"Dress",ipa:"/dres/",vi:"Váy liền, đầm",ex:"A dress is a one-piece garment for women."},
+      {en:"Skirt",ipa:"/sk3:t/",vi:"Chân váy",ex:"A skirt hangs down from the waist."},
+      {en:"Uniform",ipa:"/'ju:nifɔ.m/",vi:"Đồng phục",ex:"All students wear the same school uniform."},
+      {en:"Scarf",ipa:"/sk:f/",vi:"Khăn quàng cổ",ex:"Wrap this wool scarf around your neck."},
+      {en:"Tie",ipa:"/tai/",vi:"Ca vát",ex:"A tie is knotted at the throat."},
+      {en:"Trainers",ipa:"/'treinə(r)z/",vi:"Giày thể thao",ex:"He tied the laces of his sports trainers."},
+      {en:"Shoes",ipa:"/ʃu:/",vi:"Giày",ex:"Leather shoes protect human feet."},
+      {en:"Boots",ipa:"/bu:ts/",vi:"Giày cao cổ, bốt",ex:"These high boots cover your feet and lower legs."},
+      {en:"High heels",ipa:"/haɪ hiːlz/",vi:"Giày cao gót",ex:"Women wear high heels to raise the backs of their feet."},
+      {en:"Gloves",ipa:"/glʌvz/",vi:"Găng tay",ex:"These leather gloves cover each of your five fingers."},
+      {en:"Skinny jeans",ipa:"/'skɪni dʒiːnz/",vi:"Quần jeans bó",ex:"Don't wear that pair of skinny jeans. It will make you look thinner."},
+    ]
+  },
+  {
+    id:2, name:"FABRIC", vi:"Vải vóc", emoji:"🧵", cat:"Vải vóc",
+    words:[
+      {en:"Cotton cloth",ipa:"/ˈkɒtn klɒθ/",vi:"Vải bông",ex:"He's wearing a white cotton shirt."},
+      {en:"Denim",ipa:"/ˈdenɪm/",vi:"Vải bò",ex:"Jeans manufacturers make denim bluer with indigo dye."},
+      {en:"Felt cloth",ipa:"/felt klɒθ/",vi:"Vải nỉ, bằng dạ",ex:"She's wearing a felt hat."},
+      {en:"Fleece (fabric)",ipa:"/fliːs ˈfæbrɪk/",vi:"Vải lông cừu",ex:"This year, our company is launching the first fleece jacket collection."},
+      {en:"Lace cloth",ipa:"/leɪs klɒθ/",vi:"Vải ren, đăng ten",ex:"These lace curtains look great with a pattern of holes."},
+      {en:"Linen",ipa:"/ˈlɪnɪn/",vi:"Vải lanh",ex:"People often wear linen outfits in summer."},
+      {en:"Muslin",ipa:"/ˈmʌzlɪn/",vi:"Vải muslin mịn",ex:"Muslin is a type of fine cotton cloth almost transparent."},
+      {en:"Polyester",ipa:"/ˌpɒliˈestə(r)/",vi:"Vải polyester",ex:"Sport outfits are often made of polyester."},
+      {en:"Rayon",ipa:"/ˈreɪɒn/",vi:"Vải tơ nhân tạo",ex:"Rayon is a smooth cloth used to make clothes."},
+      {en:"Satin",ipa:"/ˈsætɪn/",vi:"Vải sa tanh",ex:"She looks gorgeous in a cream satin dress."},
+      {en:"Silk",ipa:"/sɪlk/",vi:"Tơ tằm, lụa",ex:"He was wearing a shirt made from pure silk."},
+      {en:"Taffeta",ipa:"/ˈtæfɪtə/",vi:"Vải tơ đoạn",ex:"Taffeta is used especially for making dresses."},
+      {en:"Tweed",ipa:"/twiːd/",vi:"Vải nỉ thô, nỉ hoa thô",ex:"Tweed is a type of thick rough cloth made of wool."},
+      {en:"Velvet",ipa:"/ˈvelvɪt/",vi:"Vải nhung",ex:"Velvet fabric has been a fashion trend since autumn 2007."},
+    ]
+  },
+  {
+    id:3, name:"TOOLS AND PARTS OF CLOTHING", vi:"Dụng cụ & Chi tiết trang phục", emoji:"🧷", cat:"Vải vóc",
+    words:[
+      {en:"Button",ipa:"/ˈbʌtn/",vi:"Cúc, nút áo",ex:"Can you sew two more buttons on this shirt?"},
+      {en:"Measuring tape",ipa:"/ˈmeʒərɪŋ teɪp/",vi:"Thước dây",ex:"Please use this new measuring tape to take measurements."},
+      {en:"Pin",ipa:"/pɪn/",vi:"Ghim đầu to",ex:"Pins are used to fasten together pieces of cloth before sewing."},
+      {en:"Steam iron",ipa:"/stiːm ˈaɪən/",vi:"Bàn là hơi nước",ex:"I need to use the steam iron to get these wrinkles out."},
+      {en:"Tailor's chalk",ipa:"/ˈteɪləz tʃɔːk/",vi:"Phấn may",ex:"Tailor's chalk is used for making temporary marks on cloth."},
+      {en:"Thread",ipa:"/θred/",vi:"Chỉ khâu",ex:"A thread is a thin string used for sewing or making cloth."},
+      {en:"Zipper",ipa:"/ˈzɪpə(r)/",vi:"Khóa kéo",ex:"The fabric got caught in the zipper and tore."},
+      {en:"Ironing board",ipa:"/'aɪəniŋ bɔ:d/",vi:"Bàn ủi quần áo",ex:"Start by setting up an ironing board near an electrical outlet."},
+    ]
+  },
+  {
+    id:4, name:"STEPS OF MAKING A GARMENT ITEM", vi:"Các bước may sản phẩm", emoji:"✂️", cat:"Vải vóc",
+    words:[
+      {en:"Correct the pattern",ipa:"/kəˈrekt ðə ˈpætn/",vi:"Sửa rập, sửa mẫu",ex:"Why don't you correct the pattern before sewing your garment?"},
+      {en:"Cut a sample garment",ipa:"/kʌt ə ˈsɑːmpl ˈɡɑːmənt/",vi:"Cắt mẫu may thử",ex:"Remember to cut the shoulders extra wide."},
+      {en:"Draft a preliminary pattern",ipa:"/drɑːft ə prɪˈlɪmɪnəri ˈpætn/",vi:"Phác thảo mẫu sơ bộ",ex:"Why don't you draft a preliminary pattern before doing anything else?"},
+      {en:"Drape the design",ipa:"/dreɪp ðə dɪˈzaɪn/",vi:"Dựng mẫu trên mannequin",ex:"Draping the design is an important step made after the sketching."},
+      {en:"Fit a garment on a model",ipa:"/fɪt ə ˈɡɑːmənt ɒn ə ˈmɒdl/",vi:"Mặc thử đồ lên người mẫu",ex:"We have to wait until we fit this dress on a model."},
+      {en:"Lay out pattern pieces",ipa:"/ˈleɪaʊt ˈpætn ˈpiːsɪz/",vi:"Sắp xếp các mẫu rập lên vải",ex:"It's time to lay out pattern pieces."},
+      {en:"Sew a prototype",ipa:"/səʊ ə ˈprəʊtətaɪp/",vi:"May mẫu đầu, may mẫu thử",ex:"It's important to sew a prototype to test for fit and functionality."},
+    ]
+  },
+  {
+    id:5, name:"PART OF HUMAN BODY", vi:"Các bộ phận cơ thể người", emoji:"🫀", cat:"Thiết kế",
+    words:[
+      {en:"Ankle",ipa:"/ˈæŋkl/",vi:"Mắt cá chân",ex:"She broke her ankle."},
+      {en:"Armpit",ipa:"/ˈɑːrm.pɪt/",vi:"Nách",ex:"She has just shaved her armpits."},
+      {en:"Biceps",ipa:"/ˈbaɪseps/",vi:"Bắp tay (chuột)",ex:"He is showing off his biceps on the stage."},
+      {en:"Bust/Chest",ipa:"/bʌst/ /tʃest/",vi:"Ngực / vòng ngực",ex:"I couldn't find any blouses in my bust size."},
+      {en:"Calf",ipa:"/kæf/",vi:"Bắp chân",ex:"She's been able to play since January because of a torn calf muscle."},
+      {en:"Chin",ipa:"/tʃɪn/",vi:"Cằm",ex:"A strap fastens under the chin to keep the helmet in place."},
+      {en:"Forearm",ipa:"/ˈfɔːrɑːrm/",vi:"Cẳng tay",ex:"She covered her eyes with one forearm."},
+      {en:"Hip",ipa:"/hɪp/",vi:"Hông",ex:"The jeans were a bit tight across the hip."},
+      {en:"Waist",ipa:"/weɪst/",vi:"Eo",ex:"These trousers are a bit tight around my waist."},
+      {en:"Wrist",ipa:"/rɪst/",vi:"Cổ tay",ex:"She wears a watch on her wrist."},
+      {en:"Torso",ipa:"/'tɔ.səʊ/",vi:"Nửa mình trên, thân người",ex:"The torso should look like a normal torso on a body."},
+    ]
+  },
+  {
+    id:6, name:"PARTS OF GARMENT", vi:"Các bộ phận của trang phục", emoji:"🧥", cat:"Quần áo",
+    words:[
+      {en:"Armhole",ipa:"/ˈɑːrmhoʊl/",vi:"Vòng nách",ex:"She's learning how to measure shirt's armhole."},
+      {en:"Buttonhole",ipa:"/ˈbʌtnhoʊl/",vi:"Lỗ khuy",ex:"He succeeds in sewing buttonhole at the first try."},
+      {en:"Button placket",ipa:"/ˈbʌtn ˈplakət/",vi:"Cơi khuy",ex:"You should make hidden button placket for this kind of shirt."},
+      {en:"Collar",ipa:"/ˈkɒlə(r)/",vi:"Cổ áo",ex:"I turned up my collar against the wind."},
+      {en:"Crotch",ipa:"/krɒtʃ/",vi:"Đũng",ex:"There's a hole in the crotch."},
+      {en:"Cuff",ipa:"/kʌf/",vi:"Măng séc",ex:"The cuffs of his suit jacket are badly made."},
+      {en:"Lapel",ipa:"/ləˈpel/",vi:"Ve áo",ex:"He grabbed him by the lapels of his jacket."},
+      {en:"Pocket",ipa:"/ˈpɒkɪt/",vi:"Túi",ex:"Take your hands out of your pockets!"},
+      {en:"Slit",ipa:"/slɪt/",vi:"Đường xẻ tà",ex:"She's wearing a long shirt with a slit up the side."},
+      {en:"Yoke",ipa:"/joʊk/",vi:"Đô (ngực, vai)",ex:"Yoke construction was first seen in the 19th century."},
+      {en:"Shoulder pads",ipa:"/ˈʃoʊldər pæd/",vi:"Đệm vai",ex:"The shoulder pads on the jackets made her look so big."},
+    ]
+  },
+  {
+    id:7, name:"COLORS", vi:"Màu sắc thời trang", emoji:"🎨", cat:"Thiết kế",
+    words:[
+      {en:"Ash-gray",ipa:"/æʃ ɡreɪ/",vi:"Màu xám tro",ex:"You look so dumb in this ash-gray T-shirt."},
+      {en:"Beige",ipa:"/beɪʒ/",vi:"Màu be",ex:"Beige is a light yellowish-brown colour."},
+      {en:"Burgundy",ipa:"/ˈbɜːrɡəndi/",vi:"Màu đỏ tía",ex:"A girl in a burgundy dress is so charming."},
+      {en:"Coral",ipa:"/ˈkɒrəl/",vi:"Màu san hô (hồng + cam)",ex:"Coral lipstick is a hot trend this summer."},
+      {en:"Emerald",ipa:"/ˈemərəld/",vi:"Màu ngọc lục bảo",ex:"Halong Bay is famous for its emerald water."},
+      {en:"Navy blue",ipa:"/ˈneɪvi bluː/",vi:"Màu xanh hải quân",ex:"I was dressed in a smart navy blue suit."},
+      {en:"Pastel",ipa:"/pæˈstel/",vi:"Màu phấn",ex:"The whole house was painted in soft pastels."},
+      {en:"Scarlet",ipa:"/ˈskɑːrlət/",vi:"Màu đỏ tươi",ex:"Her lips were a flash of scarlet."},
+      {en:"Turquoise",ipa:"/ˈtɜːrkwɔɪz/",vi:"Màu ngọc lam",ex:"He bought a turquoise dress as a present for his wife."},
+    ]
+  },
+  {
+    id:8, name:"EMAIL VOCABULARY", vi:"Từ vựng Email thương mại", emoji:"📧", cat:"Thương mại",
+    words:[
+      {en:"Catalogue",ipa:"/ˈkætəlɒɡ/",vi:"Ca-ta-lô",ex:"Our autumn catalogue is now available."},
+      {en:"Delivery",ipa:"/dɪˈlɪvəri/",vi:"Giao hàng",ex:"You can pay for the carpet on delivery."},
+      {en:"Goods",ipa:"/ɡʊdz/",vi:"Hàng hóa",ex:"They sell leather goods such as wallets."},
+      {en:"Payment",ipa:"/ˈpeɪmənt/",vi:"Thanh toán",ex:"Usually we ask for payment on receipt of the goods."},
+      {en:"Place an order",ipa:"/pleɪs ən ˈɔːdə(r)/",vi:"Đặt hàng",ex:"I would like to place an order for ten copies of this book."},
+      {en:"Quality",ipa:"/ˈkwɒləti/",vi:"Chất lượng",ex:"The food was of such poor quality."},
+      {en:"Quantity",ipa:"/ˈkwɒntəti/",vi:"Số lượng",ex:"We consumed vast quantities of food and drink."},
+      {en:"Sample",ipa:"/ˈsɑːmpl/",vi:"Mẫu",ex:"Please bring some samples of your work."},
+      {en:"Supplier",ipa:"/səˈplaɪə(r)/",vi:"Nhà cung cấp",ex:"He got the drugs from his usual supplier."},
+      {en:"Manufacture",ipa:"/ˌmænjuˈfæktʃə(r)/",vi:"Sản xuất",ex:"How long will it take to manufacture the uniforms?"},
+    ]
+  },
+  {
+    id:9, name:"PARTS OF THE SEWING MACHINE", vi:"Các bộ phận máy may", emoji:"⚙️", cat:"Máy móc",
+    words:[
+      {en:"Bobbin",ipa:"/ˈbɒbɪn/",vi:"Suốt chỉ",ex:"A small spool that holds the lower thread is called a bobbin."},
+      {en:"Bobbin winder",ipa:"/ˈbɒbɪn ˈwaɪndər/",vi:"Bộ phận đánh suốt",ex:"A bobbin winder winds the thread onto the bobbin."},
+      {en:"Feed dog",ipa:"/fiːd dɒɡ/",vi:"Thanh răng",ex:"The feed dogs feed the fabric in the sewing direction."},
+      {en:"Foot controller",ipa:"/fʊt kənˈtroʊlər/",vi:"Bàn đạp",ex:"You can use the foot controller to control the sewing speed."},
+      {en:"Hand wheel",ipa:"/hænd wiːl/",vi:"Bánh đà (vô lăng)",ex:"The hand wheel allows you to slowly turn the needle by hand."},
+      {en:"Needle",ipa:"/ˈniːdl/",vi:"Kim may",ex:"Needle is used for passing thread through cloth."},
+      {en:"Presser foot",ipa:"/ˈpresər fʊt/",vi:"Chân vịt",ex:"The presser foot applies pressure on the fabric."},
+      {en:"Stitch length dial",ipa:"/stɪtʃ leŋθ ˈdaɪəl/",vi:"Núm điều chỉnh mật độ mũi",ex:"Stitch length dial allows you to adjust the length of your stitches."},
+      {en:"Thread take-up lever",ipa:"/θred teɪk ʌp ˈlevər/",vi:"Cần lấy chỉ",ex:"Thread take-up lever feeds thread from spool to needle."},
+    ]
+  },
+  {
+    id:10, name:"SEWING MACHINE INSTRUCTIONS", vi:"Hướng dẫn sử dụng máy may", emoji:"🔧", cat:"Máy móc",
+    words:[
+      {en:"Clockwise",ipa:"/ˈklɒkwaɪz/",vi:"Chiều kim đồng hồ",ex:"Tighten the needle clamp screw by turning it clockwise."},
+      {en:"Counterclockwise",ipa:"/ˌkaʊntərˈklɒkwaɪz/",vi:"Ngược chiều kim đồng hồ",ex:"Turn the needle clamp screw counterclockwise to remove the needle."},
+      {en:"Depress",ipa:"/dɪˈpres/",vi:"Nhấn",ex:"You must depress the foot pedal to begin stitching."},
+      {en:"Draw out",ipa:"/drɔː aʊt/",vi:"Kéo ra",ex:"Draw out the thread from the spool."},
+      {en:"Insert",ipa:"/ɪnˈsɜːt/",vi:"Gài vào",ex:"Insert the thread through the hole of the bobbin."},
+      {en:"Lift",ipa:"/lɪft/",vi:"Nâng lên",ex:"You need to lift the presser foot to insert the fabric."},
+      {en:"Lower",ipa:"/ˈloʊər/",vi:"Hạ thấp xuống",ex:"Lower the presser foot by pressing the lever."},
+      {en:"Press",ipa:"/pres/",vi:"Ấn",ex:"Press the lever on the back of the foot holder."},
+      {en:"Raise",ipa:"/reɪz/",vi:"Nâng",ex:"Raise the needle to its highest position by turning the hand wheel."},
+      {en:"Remove",ipa:"/rɪˈmuːv/",vi:"Tháo rời",ex:"You can remove the bobbin from the bobbin winder spindle."},
+      {en:"Turn",ipa:"/tɜːn/",vi:"Bật, quay",ex:"Turn the hand wheel toward you."},
+    ]
+  },
+  {
+    id:11, name:"RELATIONSHIP BUILDING", vi:"Xây dựng mối quan hệ", emoji:"🤝", cat:"Kỹ năng",
+    words:[
+      {en:"Acquaintance",ipa:"/əˈkweɪntəns/",vi:"Người quen",ex:"Claire has a wide circle of friends and acquaintances."},
+      {en:"Appreciate",ipa:"/əˈpriːʃieɪt/",vi:"Đánh giá cao",ex:"There's no point buying him expensive shirts - he doesn't appreciate them."},
+      {en:"Co-worker",ipa:"/ˌkoʊˈwɜːrkər/",vi:"Đồng nghiệp",ex:"I'm sure my co-worker can help you."},
+      {en:"Conflict",ipa:"/ˈkɒnflɪkt/",vi:"Sự mâu thuẫn",ex:"John is often in conflict with his boss."},
+      {en:"Cultivate",ipa:"/ˈkʌltɪveɪt/",vi:"Phát triển / cải thiện",ex:"The new prime minister is cultivating relationships with East Asian countries."},
+      {en:"Network",ipa:"/ˈnetwɜːrk/",vi:"Kết nối, tạo mối quan hệ",ex:"Conferences are a good opportunity to network."},
+      {en:"Nurture",ipa:"/ˈnɜːrtʃər/",vi:"Nuôi dưỡng, phát triển",ex:"She wants to nurture her daughter's dream of being a fashion designer."},
+    ]
+  },
+  {
+    id:12, name:"SMALL TALK TECHNIQUES", vi:"Kỹ năng giao tiếp nhỏ", emoji:"💬", cat:"Kỹ năng",
+    words:[
+      {en:"Attention",ipa:"/əˈtenʃn/",vi:"Sự chú ý",ex:"They're organizing a campaign to draw people's attention to their latest collection."},
+      {en:"Curious",ipa:"/ˈkjʊəriəs/",vi:"Tò mò",ex:"A great designer starts with a curious mind."},
+      {en:"Communication skills",ipa:"/kəˌmjuːnɪˈkeɪʃn skɪlz/",vi:"Kỹ năng giao tiếp",ex:"Ruth had great communication skills."},
+      {en:"Encourage",ipa:"/ɪnˈkʌrɪdʒ/",vi:"Khuyến khích",ex:"We were encouraged to think creatively at school."},
+      {en:"Repetition",ipa:"/ˌrepəˈtɪʃn/",vi:"Sự lặp lại",ex:"His design books are full of repetition."},
+      {en:"Technique",ipa:"/tekˈniːk/",vi:"Kỹ thuật",ex:"Small talk techniques are quite easy to be put into use."},
+    ]
+  },
+  {
+    id:13, name:"GARMENT MEASUREMENTS AND SIZING", vi:"Đo lường & Kích thước quần áo", emoji:"📏", cat:"Thiết kế",
+    words:[
+      {en:"Measure",ipa:"/ˈmeʒə(r)/",vi:"Đo đạc",ex:"She is measuring her waist to check if she has put on some kilos."},
+      {en:"Take measurements",ipa:"/teɪk ˈmeʒəmənts/",vi:"Lấy số đo",ex:"Tailors always take their customers' measurements."},
+      {en:"Length",ipa:"/leŋθ/",vi:"Chiều dài",ex:"This tape measure's maximum length is 5m."},
+      {en:"Width",ipa:"/wɪtθ/",vi:"Chiều rộng",ex:"The width of this piece of fabric is 120cm."},
+      {en:"Height",ipa:"/haɪt/",vi:"Chiều cao",ex:"She is always lacking confidence because of her height."},
+      {en:"Waistline",ipa:"/ˈweɪstlaɪn/",vi:"Vòng eo, vòng thắt lưng",ex:"Venezuelan beauty queens often have 23-inch waistlines."},
+      {en:"Circumference",ipa:"/səˈkʌmpfərəns/",vi:"Chu vi đường tròn",ex:"Measuring the knee circumference is necessary when making pants."},
+      {en:"Inseam",ipa:"/ˈɪnsiːm/",vi:"Đường may phía trong",ex:"Normally, the inseam is about 13 inches shorter than the side seam."},
+      {en:"Proportion",ipa:"/prəˈpɔːrʃn/",vi:"Tỉ lệ",ex:"His head is rather small in proportion to his body."},
+      {en:"Accurate",ipa:"/ˈækjʊrət/",vi:"Chính xác",ex:"Accurate measurements lay the foundation for a perfectly fit clothing."},
+    ]
+  },
+  {
+    id:14, name:"COMMERCIAL, ACCOUNTING & CUSTOMER SERVICE", vi:"Thương mại & Kế toán", emoji:"💼", cat:"Thương mại",
+    words:[
+      {en:"Arrival",ipa:"/əˈraɪvl/",vi:"Sự đến",ex:"Two jackets were found to be damaged on arrival."},
+      {en:"Cancel",ipa:"/ˈkænsl/",vi:"Hủy",ex:"The original orders were cancelled."},
+      {en:"Confirm",ipa:"/kənˈfɜːm/",vi:"Xác nhận",ex:"We confirmed the hotel reservations by telephone."},
+      {en:"Delay",ipa:"/dɪˈleɪ/",vi:"Trì hoãn",ex:"If you delay now, the opportunity might be lost."},
+      {en:"Deposit",ipa:"/dɪˈpɒzɪt/",vi:"Tiền đặt cọc",ex:"Tom deposited three thousand dollars in the bank."},
+      {en:"Discount",ipa:"/ˈdɪskaʊnt/",vi:"Giảm giá",ex:"Tom sells T-shirts at a 30 percent discount."},
+      {en:"Invoice",ipa:"/ˈɪnvɔɪs/",vi:"Hóa đơn",ex:"We will send you an invoice for the total course fees."},
+      {en:"Refund",ipa:"/riːˈfʌnd/",vi:"Hoàn tiền",ex:"Please cancel my order and refund the money."},
+      {en:"Transfer",ipa:"/trænsˈfɜː(r)/",vi:"Chuyển khoản",ex:"I'd like to transfer some funds from my account."},
+    ]
+  },
+  {
+    id:15, name:"COGNITION & DECISION MAKING", vi:"Tư duy & Ra quyết định", emoji:"🧠", cat:"Kỹ năng",
+    words:[
+      {en:"Ability",ipa:"/ə'bɪləti/",vi:"Năng lực",ex:"She has ability to discuss effectively."},
+      {en:"Change your mind",ipa:"/tʃeɪndʒ jɔː maɪnd/",vi:"Thay đổi ý định",ex:"You always change your mind."},
+      {en:"Decision making",ipa:"/dɪ'sɪʒn 'meɪkɪŋ/",vi:"Kỹ năng đưa ra quyết định",ex:"Fred is bad at decision making."},
+      {en:"Effective",ipa:"/ɪ'fektɪv/",vi:"Hiệu quả",ex:"Mitchell has an effective way to solve the problem."},
+      {en:"Problem solving",ipa:"/'prɒbləm 'sɒlvɪŋ/",vi:"Kỹ năng giải quyết vấn đề",ex:"Fred is always good at problem solving."},
+    ]
+  },
+  {
+    id:16, name:"INTERPERSONAL & COMMUNICATION SKILLS", vi:"Giao tiếp ứng xử & Kỹ năng", emoji:"🗣️", cat:"Kỹ năng",
+    words:[
+      {en:"Communicate with",ipa:"/kə'mjuːnɪkeɪt wɪð/",vi:"Giao tiếp với",ex:"Fred only communicate with negative non-verbal communication."},
+      {en:"Communication",ipa:"/kəˌmjuːnɪˈkeɪʃn/",vi:"Giao tiếp",ex:"Speech is the fastest method of communication."},
+      {en:"Interact",ipa:"/ˌɪntərˈækt/",vi:"Tương tác",ex:"The only thing he interacts with is his computer."},
+      {en:"Interpersonal skills",ipa:"/ˌɪntərˈpɜːrsənl skɪlz/",vi:"Kỹ năng giao tiếp ứng xử",ex:"Interpersonal skills are the skills we use every day."},
+      {en:"Listening skill",ipa:"/'lɪsnɪŋ skɪl/",vi:"Kỹ năng nghe",ex:"Listening skills are needed to receive messages given by others."},
+      {en:"Verbal communication",ipa:"/'vɜːbl kəˌmjuːnɪˈkeɪʃn/",vi:"Giao tiếp bằng lời",ex:"The skill to use words effectively is verbal communication skill."},
+    ]
+  },
+  {
+    id:17, name:"BODY LANGUAGE & EXPRESSIONS", vi:"Ngôn ngữ cơ thể & Biểu cảm", emoji:"🫱", cat:"Kỹ năng",
+    words:[
+      {en:"Body language",ipa:"/'bɒdi 'læŋɡwɪdʒ/",vi:"Ngôn ngữ cơ thể",ex:"I guess that she is angry from her body language."},
+      {en:"Facial expression",ipa:"/'feɪʃl ɪkˈspreʃn/",vi:"Biểu hiện trên khuôn mặt",ex:"Smiling and frowning are examples of facial expression."},
+      {en:"Frown",ipa:"/fraʊn/",vi:"Nhíu mày",ex:"I don't understand,' she frowned."},
+      {en:"Hand gesture",ipa:"/hænd 'dʒestʃər/",vi:"Cử chỉ bằng tay",ex:"He uses hand gestures to express his emotional."},
+      {en:"Mumble",ipa:"/'mʌmbl/",vi:"Lẩm bẩm",ex:"Sorry,' she mumbled."},
+    ]
+  },
+  {
+    id:18, name:"ATTITUDES & EMOTIONAL STATES", vi:"Thái độ & Trạng thái cảm xúc", emoji:"😊", cat:"Kỹ năng",
+    words:[
+      {en:"Assertiveness",ipa:"/ə'sɜːrtɪvnəs/",vi:"Sự quyết đoán",ex:"Her assertiveness makes people take notice."},
+      {en:"Negative",ipa:"/'neɡətɪv/",vi:"Tiêu cực",ex:"Don't have negative thinking."},
+      {en:"Positive",ipa:"/'pɒzətɪv/",vi:"Tích cực",ex:"You should have a positive thinking."},
+      {en:"Negotiation",ipa:"/nɪˌɡəʊʃiˈeɪʃn/",vi:"Đàm phán",ex:"The price is still under negotiation."},
+      {en:"Self-assured",ipa:"/self ə'ʃʊəd/",vi:"Tự đảm bảo",ex:"He grew more self-assured as he got older."},
+    ]
+  },
+  {
+    id:19, name:"THREAD & SEWING DEFECTS", vi:"Lỗi may & Hỏng hóc máy may", emoji:"🪡", cat:"Máy móc",
+    words:[
+      {en:"Needle breakage",ipa:"/ˈniːdl ˈbreɪkɪdʒ/",vi:"Gãy kim",ex:"Using a small needle for thick denim will cause needle breakage."},
+      {en:"Skipped stitches",ipa:"/skɪpt ˈstɪtʃɪz/",vi:"Lỗi bỏ mũi chỉ",ex:"If the needle is bent, the machine will produce skipped stitches."},
+      {en:"Thread bunching",ipa:"/θred ˈbʌntʃɪŋ/",vi:"Rối chỉ, sùi chỉ",ex:"Check the bobbin case if you see thread bunching."},
+      {en:"Fabric puckering",ipa:"/ˈfæbrɪk ˈpʌkərɪŋ/",vi:"Nhăn vải khi may",ex:"Light fabrics are very prone to fabric puckering."},
+      {en:"Loose stitches",ipa:"/luːs ˈstɪtʃɪz/",vi:"Lỏng chỉ",ex:"The seam looks weak because of loose stitches."},
+      {en:"Thread breakage",ipa:"/θred ˈbreɪkɪdʒ/",vi:"Đứt chỉ",ex:"High thread tension is the main cause of thread breakage."},
+      {en:"Bent needle",ipa:"/bent ˈniːdl/",vi:"Kim bị cong",ex:"A bent needle can hit the throat plate and damage the machine."},
+      {en:"Machine jamming",ipa:"/məˈʃiːn ˈdʒæmɪŋ/",vi:"Máy bị kẹt cứng",ex:"Clean the lint regularly to avoid machine jamming."},
+    ]
+  },
+  {
+    id:20, name:"FASHION TRENDS", vi:"Xu hướng thời trang", emoji:"✨", cat:"Thiết kế",
+    words:[
+      {en:"Brand",ipa:"/brænd/",vi:"Thương hiệu, nhãn hàng",ex:"She buys her jeans based on the brand."},
+      {en:"Casual clothes",ipa:"/'kæʒuəl kləʊz/",vi:"Trang phục hàng ngày",ex:"Joe wears casual clothes almost all the time."},
+      {en:"Conservative",ipa:"/kən'sɜː.və.tɪv/",vi:"Không chạy theo xu hướng",ex:"Conservative people do not like fashionable or modern clothes."},
+      {en:"Fashionable",ipa:"/'fæʃnəbl/",vi:"Đúng mốt, hợp thời trang",ex:"Things that are very trendy or popular are fashionable."},
+      {en:"Grunge",ipa:"/ɡrʌndʒ/",vi:"Phong cách luộm thuộm",ex:"In the early 1990s, teenagers follow the grunge fashion."},
+      {en:"Hip-hop fashion",ipa:"/hɪp hɒp/",vi:"Phong cách hip hop",ex:"Hip-hop fashion used to be 1990s' trend."},
+      {en:"Makeover",ipa:"/'meɪkˌəʊvə/",vi:"Thay đổi vẻ bề ngoài",ex:"One of the prizes was a makeover at a top beauty salon."},
+      {en:"Trend",ipa:"/trend/",vi:"Xu hướng",ex:"These are the 8 biggest runway trends for Fall 2018."},
+    ]
+  },
+  {
+    id:21, name:"SKETCH", vi:"Phác thảo thiết kế", emoji:"✏️", cat:"Thiết kế",
+    words:[
+      {en:"Sketch",ipa:"/sketʃ/",vi:"(n) bản phác thảo; (v) phác thảo",ex:"The designer is making a sketch for his next collection."},
+      {en:"Sketchbook",ipa:"/'sketʃbuk/",vi:"Sổ phác thảo",ex:"A sketchbook is frequently used by artists for drawing or painting."},
+      {en:"Angle",ipa:"/'æŋl/",vi:"Góc",ex:"Once you identify the angle of the light, draw the darkest shadow."},
+      {en:"Skeleton",ipa:"/'skelıtn/",vi:"Bộ khung, bộ sườn",ex:"In order to draw a man correctly, we first need to outline his skeleton."},
+      {en:"Outline",ipa:"/'autlaɪn/",vi:"Nét phác đại cương",ex:"Make a croquis by tracing the outline of a model."},
+      {en:"Pose",ipa:"/pəʊz/",vi:"Tư thế (vẽ)",ex:"To draw a basic fashion figure, you need to sketch a pose first."},
+      {en:"Illustrate",ipa:"/'ɪləstreɪt/",vi:"Minh họa",ex:"You will need colored markers to illustrate your clothing designs."},
+      {en:"Gesture drawing",ipa:"/'dʒestʃə(r) 'drɔ:ɪŋ/",vi:"Thao tác vẽ",ex:"Gesture drawing is a warm-up exercise for many artists."},
+    ]
+  },
+  {
+    id:22, name:"PROCESS", vi:"Quy trình sản xuất",emoji:"🏭", cat:"Vải vóc",
+    words:[
+      {en:"Spin",ipa:"/spɪn/",vi:"Quay (sợi)",ex:"You need to spin your wrench to fasten the screws."},
+      {en:"Separate",ipa:"/'seprət/",vi:"Tách rời",ex:"We separate the cotton fiber from the cotton seed."},
+      {en:"Dye",ipa:"/daɪ/",vi:"Nhuộm",ex:"Teenagers in 1980s enjoyed dyeing their hair."},
+      {en:"Weave",ipa:"/wi:v/",vi:"Dệt, đan, kết lại",ex:"Brocade woven by hand is more costly than mechanically."},
+      {en:"Harvest",ipa:"/ˈhɑːvɪst/",vi:"Thu hoạch (bông/đay...)",ex:"Cotton is harvested in the autumn."},
+      {en:"Bleach",ipa:"/bliːtʃ/",vi:"Tẩy trắng",ex:"The fabric is bleached before it is dyed."},
+      {en:"Knit",ipa:"/nɪt/",vi:"Đan (vải thun/len)",ex:"This machine can knit a sweater in less than an hour."},
+      {en:"Print",ipa:"/prɪnt/",vi:"In họa tiết",ex:"Patterns are printed onto the fabric using inkjet technology."},
+      {en:"Cut",ipa:"/kʌt/",vi:"Cắt (vải theo rập)",ex:"Workers cut the fabric according to the design patterns."},
+      {en:"Sew",ipa:"/səʊ/",vi:"May, khâu",ex:"Components are sewed together to make a complete garment."},
+      {en:"Inspect",ipa:"/ɪnˈspekt/",vi:"Kiểm tra (chất lượng)",ex:"Quality control staff inspect every item for defects."},
+      {en:"Pack",ipa:"/pæk/",vi:"Đóng gói",ex:"The garments are packed into boxes for shipping."},
+    ]
+  },
+  {
+    id:23, name:"ACCESSORY & PATTERN", vi:"Phụ kiện & Họa tiết", emoji:"💎", cat:"Thiết kế",
+    words:[
+      {en:"Accessory",ipa:"/əkˈsesəri/",vi:"Phụ liệu, phụ kiện",ex:"Designers select the right accessory to match the fabric."},
+      {en:"Pattern",ipa:"/ˈpætən/",vi:"Họa tiết / Mẫu rập",ex:"She prefers floral patterns for her summer dresses."},
+      {en:"Lace",ipa:"/leɪs/",vi:"Ren, vải ren",ex:"The wedding dress was decorated with delicate lace."},
+      {en:"Ribbon",ipa:"/ˈrɪbən/",vi:"Ruy-băng, dây nơ",ex:"She tied a silk ribbon around the waist of the dress."},
+      {en:"Elastic band",ipa:"/ɪˈlæstɪk bænd/",vi:"Dây thun, chun quần",ex:"Use an elastic band to make the waistband flexible."},
+      {en:"Interlining",ipa:"/ˌɪntəˈlaɪnɪŋ/",vi:"Keo dựng, mếch vải",ex:"Interlining is used to stiffen the collar of the shirt."},
+      {en:"Velcro",ipa:"/ˈvelkrəʊ/",vi:"Băng gai dính, khóa nhám",ex:"Shoes with Velcro straps are very convenient for children."},
+      {en:"Label",ipa:"/ˈleɪbl/",vi:"Nhãn mác (quần áo)",ex:"Always check the care label before washing the garment."},
+      {en:"Stripe",ipa:"/straɪp/",vi:"Họa tiết kẻ sọc",ex:"Vertical stripes can make you look taller."},
+      {en:"Check / Plaid",ipa:"/tʃek/ /plæd/",vi:"Họa tiết kẻ ô vuông, caro",ex:"He bought a classic blue plaid shirt for the weekend."},
+    ]
+  }
 ];
 
-// Load / init localStorage
-function loadTopics() {
-  const saved = localStorage.getItem('fe_topics');
-  if (!saved) {
-    localStorage.setItem('fe_topics', JSON.stringify(DEFAULT_TOPICS));
-    return DEFAULT_TOPICS;
+const CAT_TOPICS = {
+  all: TOPICS.map(t=>t.id),
+  'Vải vóc': TOPICS.filter(t=>t.cat==='Vải vóc').map(t=>t.id),
+  'Quần áo': TOPICS.filter(t=>t.cat==='Quần áo').map(t=>t.id),
+  'Máy móc': TOPICS.filter(t=>t.cat==='Máy móc').map(t=>t.id),
+  'Kỹ năng': TOPICS.filter(t=>t.cat==='Kỹ năng').map(t=>t.id),
+  'Thương mại': TOPICS.filter(t=>t.cat==='Thương mại').map(t=>t.id),
+  'Thiết kế': TOPICS.filter(t=>t.cat==='Thiết kế').map(t=>t.id),
+};
+
+// ===== STATE =====
+let currentUser = 'Khách';
+let isGuest = true;
+let currentTopicId = 1;
+let currentCardIdx = 0;
+let isFlipped = false;
+let cardStates = {}; // {topicId: {idx: 'known'|'unknown'|'bookmark'}}
+let bookmarks = []; // [{word, topicId}]
+
+// ===== AUTH =====
+function switchTab(tab){
+  const tabs = document.querySelectorAll('.auth-tab');
+  tabs[0].classList.toggle('active', tab==='login');
+  tabs[1].classList.toggle('active', tab==='register');
+  document.getElementById('loginForm').style.display = tab==='login'?'block':'none';
+  document.getElementById('registerForm').style.display = tab==='register'?'block':'none';
+}
+function togglePw(id){
+  const el = document.getElementById(id);
+  el.type = el.type==='password'?'text':'password';
+}
+function doLogin(){
+  const email = document.getElementById('loginEmail').value;
+  if(!email){showToast('Vui lòng nhập email!');return;}
+  currentUser = email.split('@')[0];
+  isGuest = false;
+  enterApp();
+}
+function doRegister(){
+  currentUser = 'Người dùng mới';
+  isGuest = false;
+  enterApp();
+  showToast('Tạo tài khoản thành công! 🎉');
+}
+function guestLogin(){
+  currentUser = 'Khách';
+  isGuest = true;
+  enterApp();
+}
+function enterApp(){
+  document.getElementById('screen-auth').classList.remove('active');
+  document.getElementById('mainNav').style.display='flex';
+  document.getElementById('navAvatar').textContent = currentUser[0].toUpperCase();
+  showScreen('home');
+  renderHomeTopics();
+  renderAllTopics();
+}
+
+// ===== SCREEN ROUTER =====
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el = document.getElementById('screen-'+name);
+  if(el) el.classList.add('active');
+  if(name==='notes') renderNotes();
+  if(name==='study' && !currentTopicId) startTopic(TOPICS[0].id);
+}
+function setActiveLink(el){
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ===== TOPIC CARDS =====
+function topicProgress(id){
+  const topic = TOPICS.find(t=>t.id===id);
+  const states = cardStates[id]||{};
+  const known = Object.values(states).filter(v=>v==='known').length;
+  return topic ? Math.round(known/topic.words.length*100) : 0;
+}
+function renderTopicsTo(container, ids){
+  const grid = document.getElementById(container);
+  if(!grid) return;
+  grid.innerHTML='';
+  ids.forEach(id=>{
+    const t = TOPICS.find(x=>x.id===id);
+    if(!t) return;
+    const pct = topicProgress(id);
+    const card = document.createElement('div');
+    card.className='topic-card';
+    card.innerHTML=`
+      <div class="topic-badge">TOPIC ${t.id}</div>
+      <div class="topic-owner">👤 Cá nhân</div>
+      <div class="topic-img" style="background:linear-gradient(135deg,hsl(${id*30},30%,88%),hsl(${id*30+40},30%,92%))">${t.emoji}</div>
+      <div class="topic-body">
+        <div class="topic-name">${t.name}</div>
+        <div class="topic-progress-row"><span>📖 ${t.words.length} từ</span><span style="color:var(--mauve)">${pct}%</span></div>
+        <div class="topic-progress-bar"><div class="topic-progress-fill" style="width:${pct}%"></div></div>
+        <button class="btn-study" onclick="startTopic(${t.id})">📖 Học ngay</button>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+function renderHomeTopics(cat='all'){
+  renderTopicsTo('homeTopicsGrid', (CAT_TOPICS[cat]||TOPICS.map(t=>t.id)).slice(0,8));
+}
+function renderAllTopics(){
+  renderTopicsTo('allTopicsGrid', TOPICS.map(t=>t.id));
+}
+function filterTopics(cat, el){
+  document.querySelectorAll('#homeFilterBar .filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderHomeTopics(cat);
+}
+
+// ===== STUDY =====
+function startTopic(id){
+  currentTopicId = id;
+  currentCardIdx = 0;
+  isFlipped = false;
+  showScreen('study');
+  renderSidebar();
+  renderCard();
+}
+function renderSidebar(){
+  const t = TOPICS.find(x=>x.id===currentTopicId);
+  if(!t) return;
+  document.getElementById('sidebarTopicTitle').textContent = t.vi;
+  const states = cardStates[t.id]||{};
+  const known = Object.values(states).filter(v=>v==='known').length;
+  const unknown = Object.values(states).filter(v=>v==='unknown').length;
+  const bm = Object.values(states).filter(v=>v==='bookmark').length;
+  const done = known + unknown;
+  document.getElementById('sidebarProgText').textContent = `${done}/${t.words.length}`;
+  const pct = Math.round(done/t.words.length*100);
+  document.getElementById('sidebarProgFill').style.width = pct+'%';
+  document.getElementById('sidebarProgPct').textContent = pct+'%';
+  document.getElementById('statsKnown').textContent = known;
+  document.getElementById('statsUnknown').textContent = unknown;
+  document.getElementById('statsBookmark').textContent = bm;
+  // Parts
+  const partsEl = document.getElementById('sidebarParts');
+  partsEl.innerHTML='';
+  const chunkSize = 5;
+  for(let i=0;i<t.words.length;i+=chunkSize){
+    const part = Math.floor(i/chunkSize)+1;
+    const div = document.createElement('div');
+    div.className='sidebar-part'+(currentCardIdx>=i && currentCardIdx<i+chunkSize?' active':'');
+    div.innerHTML=`<span>📖 Part ${part}</span><span style="font-size:.75rem;color:var(--slate)">${Math.min(chunkSize,t.words.length-i)} từ</span>`;
+    div.onclick=()=>{currentCardIdx=i;isFlipped=false;renderCard();renderSidebar()};
+    partsEl.appendChild(div);
   }
-  return JSON.parse(saved);
 }
-function saveTopics(topics) {
-  localStorage.setItem('fe_topics', JSON.stringify(topics));
+function renderCard(){
+  const t = TOPICS.find(x=>x.id===currentTopicId);
+  if(!t) return;
+  const word = t.words[currentCardIdx];
+  if(!word) return;
+  // Reset flip
+  const card = document.getElementById('flashcard');
+  isFlipped = false;
+  card.classList.remove('flipped');
+  // Front
+  document.getElementById('cardTopicTag').textContent = `TOPIC ${t.id}`;
+  document.getElementById('cardTopicTagBack').textContent = `TOPIC ${t.id}`;
+  document.getElementById('cardEmoji').textContent = t.emoji;
+  document.getElementById('cardVi').textContent = word.vi;
+  // Back
+  document.getElementById('cardEn').textContent = word.en;
+  document.getElementById('cardIpa').textContent = word.ipa;
+  document.getElementById('cardExample').textContent = word.ex;
+  // Counter
+  document.getElementById('cardCounter').textContent = `${currentCardIdx+1} / ${t.words.length}`;
+  // Header
+  document.getElementById('studyHeaderName').textContent = `Topic ${t.id}: ${t.vi}`;
+  document.getElementById('studyHeaderSub').textContent = `Topic ${t.id} — ${t.words.length} từ vựng`;
+  document.getElementById('studyHeaderIcon').textContent = t.emoji;
+  // Dots (show up to 5 around current)
+  const dotsEl = document.getElementById('cardDots');
+  dotsEl.innerHTML='';
+  const total = t.words.length;
+  const maxDots = Math.min(total, 7);
+  for(let i=0;i<maxDots;i++){
+    const realIdx = total<=7 ? i : Math.round(i*(total-1)/(maxDots-1));
+    const dot = document.createElement('div');
+    dot.className='card-dot'+(Math.round(currentCardIdx*(maxDots-1)/(total-1))===i?' active':'');
+    dotsEl.appendChild(dot);
+  }
 }
-function loadWords() {
-  return JSON.parse(localStorage.getItem('fe_words') || '[]');
+function flipCard(){
+  const card = document.getElementById('flashcard');
+  isFlipped = !isFlipped;
+  card.classList.toggle('flipped', isFlipped);
+  if(isFlipped){
+    const t = TOPICS.find(x=>x.id===currentTopicId);
+    const word = t?.words[currentCardIdx];
+    if(word) speak(word.en);
+  }
 }
-function saveWords(words) {
-  localStorage.setItem('fe_words', JSON.stringify(words));
+function speak(text){
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(text);
+    utt.lang='en-US';
+    utt.rate=0.85;
+    utt.pitch=1;
+    window.speechSynthesis.speak(utt);
+  }
 }
-
-let topics = loadTopics();
-let words  = loadWords();
-let currentFilter = 'all';
-
-// ============================================================
-// RENDER TOPIC GRID
-// ============================================================
-const PROGRESS_MOCK = { 1:60, 2:30, 3:0, 4:85, 5:10, 6:45, 7:70,
-                        8:0,  9:20, 10:55, 11:90, 12:15, 13:5, 14:0, 15:35, 16:25 };
-
-function renderTopics(filter = 'all') {
-  const grid = document.getElementById('topicGrid');
-  const filtered = filter === 'all' ? topics : topics.filter(t => t.cat === filter);
-
-  grid.innerHTML = filtered.map(t => {
-    const userWords = words.filter(w => w.topicId == t.id);
-    const total = t.count + userWords.length;
-    const progress = PROGRESS_MOCK[t.id] || 0;
-    return `
-    <a class="topic-card" href="flashcard.html?topic=${t.id}" onclick="setCurrentTopic(${t.id}, event)">
-      <div class="topic-card-img theme-${t.theme}">
-        <span>${t.emoji}</span>
-        <span class="topic-num">TOPIC ${t.id}</span>
-        <span class="topic-badge">👤 Cá nhân</span>
-      </div>
-      <div class="topic-card-body">
-        <div class="topic-card-name">${t.name.toUpperCase()}</div>
-        <div class="topic-card-meta">
-          <div class="topic-card-count">📖 ${total} từ</div>
-          <div style="font-size:11px;font-weight:700;color:var(--primary)">${progress}%</div>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" style="width:${progress}%"></div>
-        </div>
-        <button class="study-btn" onclick="event.preventDefault();event.stopPropagation();goStudy(${t.id})">
-          🃏 Học ngay
-        </button>
-      </div>
-    </a>`;
-  }).join('');
-}
-
-function setCurrentTopic(id, e) {
-  localStorage.setItem('fe_current_topic', id);
-}
-function goStudy(id) {
-  localStorage.setItem('fe_current_topic', id);
-  window.location.href = 'flashcard.html?topic=' + id;
-}
-
-// ============================================================
-// FILTER
-// ============================================================
-function filterTopics(cat, btn) {
-  currentFilter = cat;
-  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderTopics(cat);
-}
-
-// ============================================================
-// SEARCH
-// ============================================================
-function doSearch() {
-  const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  if (!q) return;
-  window.location.href = 'search.html?q=' + encodeURIComponent(q);
-}
-
-// ============================================================
-// MODAL: ADD WORD
-// ============================================================
-function openModal() {
-  // Populate topic select
-  const sel = document.getElementById('newTopic');
-  sel.innerHTML = '<option value="0">-- Chọn chủ đề --</option>' +
-    topics.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
-  document.getElementById('addModal').classList.add('open');
-}
-function closeModal() {
-  document.getElementById('addModal').classList.remove('open');
-}
-function saveWord() {
-  const word    = document.getElementById('newWord').value.trim();
-  const meaning = document.getElementById('newMeaning').value.trim();
-  const phonetic= document.getElementById('newPhonetic').value.trim();
-  const example = document.getElementById('newExample').value.trim();
-  const topicId = parseInt(document.getElementById('newTopic').value);
-
-  if (!word || !meaning) {
-    showToast('⚠️ Vui lòng nhập từ và nghĩa!', '');
+function markCard(state){
+  const t = TOPICS.find(x=>x.id===currentTopicId);
+  if(!t) return;
+  if(!cardStates[t.id]) cardStates[t.id]={};
+  cardStates[t.id][currentCardIdx]=state;
+  if(state==='bookmark'){
+    const word = t.words[currentCardIdx];
+    const exists = bookmarks.find(b=>b.word.en===word.en&&b.topicId===t.id);
+    if(!exists) bookmarks.push({word,topicId:t.id,topicName:t.vi});
+    showToast('Đã lưu bookmark ★');
+  } else if(state==='known'){
+    showToast('Tuyệt! Đã thuộc từ này 😊');
+    nextCard();
+    return;
+  } else {
+    showToast('OK, sẽ ôn lại từ này sau 📚');
+    nextCard();
     return;
   }
-  const newWord = {
-    id: Date.now(),
-    word, meaning, phonetic, example, topicId,
-    createdAt: new Date().toISOString(),
-    ease: 2.5, interval: 1, reps: 0
-  };
-  words.push(newWord);
-  saveWords(words);
-
-  // Clear form
-  ['newWord','newMeaning','newPhonetic','newExample'].forEach(id =>
-    document.getElementById(id).value = '');
-  document.getElementById('newTopic').value = '0';
-
-  closeModal();
-  renderTopics(currentFilter);
-  showToast('✅ Đã thêm từ "' + newWord.word + '" thành công!', 'success');
+  renderSidebar();
+  renderAllTopics();
+  renderHomeTopics();
 }
-
-// ============================================================
-// TOAST
-// ============================================================
-function showToast(msg, type) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast' + (type === 'success' ? ' success' : '') + ' show';
-  setTimeout(() => t.className = 'toast', 2800);
-}
-
-// ============================================================
-// USER SESSION: hiển thị tên + chữ cái đầu trên avatar
-// ============================================================
-function renderUserHeader() {
-  const session = JSON.parse(localStorage.getItem('fe_current_user') || 'null');
-  if (!session) return;
-  const avatar  = document.getElementById('headerAvatar');
-  const initial = (session.name || 'U').trim().charAt(0).toUpperCase();
-  avatar.childNodes[0].textContent = initial;
-}
-
-function doLogout(e) {
-  e.preventDefault();
-  if (!confirm('Đăng xuất khỏi FlashEng?')) return;
-  localStorage.removeItem('fe_current_user');
-  window.location.href = 'login.html';
-}
-
-// ============================================================
-// INIT
-// ============================================================
-renderTopics();
-renderUserHeader();
-</script>
-
-<script src="audio_map.js"></script>
-<script>
-window.playWordAudio=function(word){
- try{
-  const k=(word||'').toString().trim().toLowerCase();
-  if(window.AUDIO_MAP && AUDIO_MAP[k]){
-    const a=new Audio(AUDIO_MAP[k]); a.play(); return true;
+function nextCard(){
+  const t = TOPICS.find(x=>x.id===currentTopicId);
+  if(!t) return;
+  if(currentCardIdx < t.words.length-1){
+    currentCardIdx++;
+  } else {
+    showToast('🎉 Hết thẻ! Bắt đầu lại từ đầu.');
+    currentCardIdx = 0;
   }
- }catch(e){}
- return false;
-};
+  isFlipped=false;
+  renderCard();
+  renderSidebar();
+}
+function prevCard(){
+  if(currentCardIdx > 0){
+    currentCardIdx--;
+    isFlipped=false;
+    renderCard();
+    renderSidebar();
+  }
+}
+
+// ===== NOTES =====
+function renderNotes(){
+  const container = document.getElementById('notesContainer');
+  if(bookmarks.length===0){
+    container.innerHTML='<div class="notes-empty">⭐ Chưa có từ nào được bookmark.<br><span style="font-size:.85rem;color:#bbb;margin-top:.5rem;display:block">Hãy bắt đầu học và đánh dấu từ yêu thích!</span></div>';
+    return;
+  }
+  container.innerHTML = bookmarks.map(b=>`
+    <div class="note-card">
+      <div class="note-word">${b.word.en}</div>
+      <span class="note-ipa">${b.word.ipa}</span>
+      <div class="note-vi">${b.word.vi}</div>
+      <div class="note-ex">${b.word.ex}</div>
+      <div style="margin-top:.5rem;font-size:.75rem;color:var(--dusty-rose)">📚 ${b.topicName}</div>
+    </div>`).join('');
+}
+function clearBookmarks(){
+  bookmarks=[];
+  renderNotes();
+  showToast('Đã xóa tất cả bookmark');
+}
+
+// ===== SEARCH =====
+function openSearch(){
+  document.getElementById('searchModal').classList.add('open');
+  setTimeout(()=>document.getElementById('searchField').focus(),100);
+}
+function closeSearch(e){
+  if(!e||e.target===document.getElementById('searchModal'))
+    document.getElementById('searchModal').classList.remove('open');
+}
+function doSearch(q){
+  const results = document.getElementById('searchResults');
+  if(!q.trim()){results.innerHTML='';return;}
+  const matches = [];
+  TOPICS.forEach(t=>{
+    t.words.forEach(w=>{
+      if(w.en.toLowerCase().includes(q.toLowerCase())||w.vi.includes(q)){
+        matches.push({...w,topicName:t.vi,topicId:t.id});
+      }
+    });
+  });
+  if(matches.length===0){
+    results.innerHTML='<div style="padding:1.5rem;text-align:center;color:#bbb;font-size:.9rem">Không tìm thấy kết quả</div>';
+    return;
+  }
+  results.innerHTML = matches.slice(0,20).map(m=>`
+    <div class="search-result-item" onclick="goToWord(${m.topicId})">
+      <div style="flex:1">
+        <div class="sri-en">${m.en}</div>
+        <div class="sri-vi">${m.vi} • <span class="sri-topic">${m.topicName}</span></div>
+      </div>
+      <span style="font-size:.8rem;color:#ccc">→</span>
+    </div>`).join('');
+}
+function goToWord(topicId){
+  closeSearch();
+  startTopic(topicId);
+}
+
+// ===== TOAST =====
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// ===== KEYBOARD =====
+document.addEventListener('keydown',e=>{
+  const studyActive = document.getElementById('screen-study').classList.contains('active');
+  if(!studyActive) return;
+  if(e.code==='Space'||e.code==='ArrowUp'||e.code==='ArrowDown') flipCard();
+  if(e.code==='ArrowRight') nextCard();
+  if(e.code==='ArrowLeft') prevCard();
+  if(e.key==='1') markCard('unknown');
+  if(e.key==='2') markCard('known');
+  if(e.key==='3') markCard('bookmark');
+});
 </script>
 </body>
 </html>
